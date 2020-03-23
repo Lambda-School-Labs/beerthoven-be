@@ -1,4 +1,4 @@
-type Events {
+type events {
   event_id: ID! @id
   event_name: String!
   event_type: String!
@@ -17,7 +17,7 @@ type Events {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendors: [Vendor]!
+  vendors: [vendor]!
   setup_costs: Int 
   talent_costs: Int
   opening_time: Int
@@ -30,6 +30,13 @@ type Events {
   parking_max_capacity: Int
   sales_gross: Int
   sales_net: Int
+}
+
+type vendor {
+  id: ID!
+  name: String!
+  email: String!
+  vendor_type: String
 }
 
 type user_talent {
@@ -57,8 +64,9 @@ type person {
   city: String
   state: String
   zip: String
-  tickets: [ticket]
-  donation: [donation]
+  tickets: [ticket]!
+  donation: [donation]!
+  volunteer: [volunteer]!
 }
 
 type ticket {
@@ -74,7 +82,9 @@ type donation {
 }
 
 type volunteer {
-  
+  id: ID! @id
+  person: person!
+  # find out what data is needed for volunteer
 }
 
 type users {
