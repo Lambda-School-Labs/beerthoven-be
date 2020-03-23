@@ -1,6 +1,6 @@
 // @ts-check
 
-const { importSchema } = require("graphql-import");
+const { importSchema } = require('graphql-import');
 
 const PORT = process.env.PORT || 8000;
 const { ApolloServer, gql } = require("apollo-server");
