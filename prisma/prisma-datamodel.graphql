@@ -1,10 +1,131 @@
-type User {
-  id: ID! @id
-  profile: Profile
+type Events {
+  event_id: ID! @id
+  event_name: String!
+  event_type: String!
+  event_address: String!
+  event_description: String!
+  max_capacity: Int
+  min_capacity: Int
+  min_income: Int
+  deposit_amount: Int
+  smoking_allowed: Boolean
+  under21_allowed: Boolean
+  under18_allowed: Boolean
+  tickets_sold: Int
+  wheelchair_accessible: Boolean
+  alcohol_beer_served: Boolean
+  alcohol_wine_served: Boolean
+  alcohol_spirits_served: Boolean
+  food_served: Boolean
+  vendors: [Vendor]!
+  setup_costs: Int 
+  talent_costs: Int
+  opening_time: Int
+  closing_time: Int
+  event_date: Int
+  tabc_certified: Boolean
+  indoor_event: Boolean
+  outdoor_vent: Boolean
+  parking_lot_available: Boolean
+  parking_max_capacity: Int
+  sales_gross: Int
+  sales_net: Int
 }
 
-type Profile {
+type user_talent {
   id: ID! @id
-  favorite_color: String
-  favorite_shape: String
+  ticket_id: Int
+  event_ticket: Int
+}
+
+type talent_events {
+  talent_event_id: Int
+  talent_id: Int
+  event_id: Int
+  admin: Boolean
+}
+
+type person {
+  id: ID! @id
+  date_created: Int!
+  first_name: String!
+  last_name: String!
+  email: String!
+  phone: String
+  address: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  tickets: [ticket]
+  donation: [donation]
+}
+
+type ticket {
+  id: ID! @id
+  person: person!
+  # find out what data is needed for ticket
+}
+
+type donation {
+  id: ID! @id
+  person: person!
+  # find out what data is needed for donation
+}
+
+type volunteer {
+  
+}
+
+type users {
+  id: ID! @id
+  date_created: Int!
+  username: String!
+  password: String!
+  person: person!
+  role: Int!
+}
+
+type user_events {
+  user_event_id: ID! @id
+  user_id: Int
+  event_id: Int!
+  visiter: Boolean!
+  admin: Boolean!
+}
+
+type talent {
+  talent_id: ID! @id
+  talent_name: String!
+  performance_type: String!
+  address: String!
+  website: String
+  min_payment: Int
+  hourly_rate: Int
+  deposit_amount: Int
+  smoking_allowed: Boolean
+  under18_allowed: Boolean
+  availability_days_of_week: String
+  agent_name_first: String
+  agent_name_last: String
+  agent_phone_number: Int
+  number_of_years_performing: Int
+  number_of_previous_performances: Int
+  average_number_of_shows_per_week: Int
+  performance_genre: String
+  portfolio_url: String
+  backup_performers_icoe: Boolean
+  number_of_performers: Int
+  willing_to_be_own_emcee: Boolean
+  takes_requests: Boolean
+  setup_themselves: Boolean
+  breakdown_themselves: Boolean
+  contract_provided: Boolean
+  payment_plan_option: Boolean
+  min_advance_booking_weeks: Boolean
+  insured: Boolean
+  provides_all_own_equipment: Boolean
+  number_of_outlets_required: Int
+  number_of_special_outlets_required: Int
+  willing_to_meet_prior_to_show: Boolean
 }
