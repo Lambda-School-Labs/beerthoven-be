@@ -17,7 +17,7 @@ type events {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendors: [vendor]!
+  
   setup_costs: Int 
   talent_costs: Int
   opening_time: Int
@@ -32,8 +32,8 @@ type events {
   sales_net: Int
 }
 
-type vendor {
-  id: ID!
+type vendor @relation(name: "VENDOR") {
+  id: ID! @id
   name: String!
   email: String!
   vendor_type: String
@@ -46,7 +46,7 @@ type user_talent {
 }
 
 type talent_events {
-  talent_event_id: Int
+  talent_event_id: ID! @id
   talent_id: Int
   event_id: Int
   admin: Boolean
@@ -66,7 +66,7 @@ type person {
   zip: String
   tickets: [ticket]!
   donation: [donation]!
-  volunteer: [volunteer]!
+  volunteer: [volunteer]! 
 }
 
 type ticket {
@@ -83,7 +83,7 @@ type donation {
 
 type volunteer {
   id: ID! @id
-  person: person!
+  person: person!  
   # find out what data is needed for volunteer
 }
 

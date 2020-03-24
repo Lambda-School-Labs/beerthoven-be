@@ -5,7 +5,7 @@
   "author": "Lambda Labs",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon src/server.js "
+    "server": "nodemon index.js "
   },
   "dependencies": {
     "@okta/jwt-verifier": "^1.0.0",
