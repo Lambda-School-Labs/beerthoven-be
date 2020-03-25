@@ -64,7 +64,7 @@ prisma-generate:
 	@export $$(cat .env | xargs)			&& \
 	 echo															&& \
 	 echo Generating Prisma schema		&& \
-	 cd prisma && yarn install && prisma generate
+	 cd prisma && yarn generate
 
 local-prisma-deploy:
 	@export $$(cat .env | xargs)			&& \
