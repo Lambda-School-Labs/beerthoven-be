@@ -1,6 +1,10 @@
 {
   "scripts": {
-    "generate": "prisma generate"
+    "generate": "prisma generate",
+    "deploy":   "prisma deploy",
+    "token":    "prisma token",
+    "reset":    "prisma reset --force",
+    "seed":     "prisma deploy"
   },
   "dependencies": {
     "faker": "^4.1.0",
