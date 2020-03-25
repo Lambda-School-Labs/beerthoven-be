@@ -1,5 +1,5 @@
 SHELL := bash
-.SHELLFLAGS := -eu -o pipefail -c  
+.SHELLFLAGS := -eu -o pipefail -c
 
 # =================================================================
 # = Utility targets ===============================================
@@ -37,7 +37,6 @@ init: clean
 	 printf "%s\n"   "======================================================================================"		&& \
 	 printf "$(NO_COLOR)"
 	 cd apollo && yarn install
-	 cd apollo && yarn install
 
 docker-clean: clean
 	@printf "$(OK_COLOR)"																																												&& \
@@ -49,7 +48,7 @@ docker-clean: clean
 	-docker container rm $$(docker container ls -aq)
 	-docker system prune -f
 
-local-up: clean apollo-build
+local-up: apollo-build
 	@printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
 	 printf "%s\n"   "= Bringing up Prismatopia"																																&& \
@@ -65,7 +64,7 @@ prisma-generate:
 	@export $$(cat .env | xargs)			&& \
 	 echo															&& \
 	 echo Generating Prisma schema		&& \
-	 cd prisma && prisma generate
+	 cd prisma && yarn install && prisma generate
 
 local-prisma-deploy:
 	@export $$(cat .env | xargs)			&& \
@@ -100,7 +99,7 @@ apollo-build: prisma-generate
 	 printf "%s\n"   "= Building Apollo container image: $${APOLLO_CONTAINER_IMAGE}"														&& \
 	 printf "%s\n"   "======================================================================================"		&& \
 	 printf "$(NO_COLOR)"																																												&& \
-	 cd apollo && docker build -t $${APOLLO_CONTAINER_IMAGE} .
+	 cd apollo && yarn install && docker build -t $${APOLLO_CONTAINER_IMAGE} .
 
 apollo-push: apollo-build
 	@export $$(cat .env | xargs)																																								&& \
@@ -112,17 +111,21 @@ apollo-push: apollo-build
 	 cd apollo && docker push $${APOLLO_CONTAINER_IMAGE}
 
 apollo-token:
-	@export $$(cat .env | xargs)																																								&& \
-	 printf "$(OK_COLOR)"																																												&& \
-	 printf "\n%s\n" "======================================================================================"		&& \
-	 printf "%s\n"   "= Grabbing token from: $${OAUTH_TOKEN_ENDPOINT}"																					&& \
-	 printf "%s\n"   "======================================================================================"		&& \
-	 printf "$(NO_COLOR)"																																												&& \
-	 curl --request POST 																																													 \
-		    --url $${OAUTH_TOKEN_ENDPOINT}/v1/token 																																 \
-		    --header 'content-type: application/x-www-form-urlencoded' 																							 \
-		    --data 'grant_type=client_credentials&scope=groups'																											 \
-				-u $${TEST_OAUTH_CLIENT_ID}:$${TEST_OAUTH_CLIENT_SECRET}
+	export $$(cat .env | xargs)																																								  && 			\
+	 printf "$(OK_COLOR)"																																												&& 			\
+	 printf "\n%s\n" "======================================================================================"		&& 			\
+	 printf "%s\n"   "= Grabbing token from: $${OAUTH_TOKEN_ENDPOINT}"																					&& 			\
+	 printf "%s\n"   "======================================================================================"		&& 			\
+	 printf "$(NO_COLOR)"																																												&& 			\
+	 curl -v 																																																 					  \
+		    --url $${OKTA_DOMAIN}/oauth2/default/v1/token																									 								\
+				--header 'accept: application/json'																																			 			\
+		    --header 'content-type: application/x-www-form-urlencoded' 																							 			\
+		    --data grant_type=password																																										\
+				--data scope=openid																																														\
+				--data-urlencode username=$${APOLLO_TEST_USERNAME}																														\
+				--data-urlencode password=$${APOLLO_TEST_PASSWORD}																														\
+				-u $${APOLLO_TEST_CLIENT_ID}:$${APOLLO_TEST_CLIENT_SECRET}
 
 
 # =================================================================
@@ -356,7 +359,7 @@ aws-prisma-service-secret: env-ENVIRONMENT_NAME aws-env-banner
 	@echo PRISMA_SERVICE_API_SECRET_ARN_EXPORT: $(PRISMA_SERVICE_API_SECRET_ARN_EXPORT) && \
 	 echo PRISMA_SERVICE_API_SECRET_ARN: $(PRISMA_SERVICE_API_SECRET_ARN)								&& \
 	 echo PRISMA_SERVICE_API_SECRET: $(PRISMA_SERVICE_API_SECRET)
-	 
+
 
 
 # ===========================================================================
