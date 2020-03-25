@@ -1,4 +1,4 @@
-type event {
+type Event {
   event_id: ID! @id
   event_name: String!
   event_type: String!
@@ -17,7 +17,7 @@ type event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [vendor]!
+  vendor: [Vendor]!
   setup_costs: Int 
   talent_costs: Int
   opening_time: Int
@@ -32,29 +32,29 @@ type event {
   sales_net: Int
 }
 
-type vendor {
+type Vendor {
   id: ID! @id
   name: String!
   email: String!
   vendor_type: String
 }
 
-type user_talent {
+type User_Talent {
   id: ID! @id
   ticket_id: Int
   event_ticket: Int
 }
 
-type talent_event {
+type Talent_Event {
   talent_event_id: ID! @id
   talent_id: Int
   event_id: Int
   admin: Boolean
 }
 
-type person {
+type Person {
   id: ID! @id
-  date_created: Int!
+  date_created: DateTime!
   first_name: String!
   last_name: String!
   email: String!
@@ -64,39 +64,39 @@ type person {
   city: String
   state: String
   zip: String
-  tickets: [ticket]!
-  donation: [donation]!
-  volunteer: [volunteer]! 
+  tickets: [Ticket]!
+  donation: [Donation]!
+  volunteer: [Volunteer]! 
 }
 
-type ticket {
+type Ticket {
   id: ID! @id
-  person: person!
+  person: Person!
   # find out what data is needed for ticket
 }
 
-type donation {
+type Donation {
   id: ID! @id
-  person: person!
+  person: Person!
   # find out what data is needed for donation
 }
 
-type volunteer {
+type Volunteer {
   id: ID! @id
-  person: person!  
+  person: Person!  
   # find out what data is needed for volunteer
 }
 
-type user {
+type User {
   id: ID! @id
   date_created: Int!
   username: String!
   password: String!
-  person: person!
+  person: Person!
   role: Int!
 }
 
-type user_event {
+type User_Event {
   user_event_id: ID! @id
   user_id: Int
   event_id: Int!
@@ -104,7 +104,7 @@ type user_event {
   admin: Boolean!
 }
 
-type talent {
+type Talent {
   talent_id: ID! @id
   talent_name: String!
   performance_type: String!

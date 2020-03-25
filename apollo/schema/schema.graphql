@@ -1,5 +1,5 @@
 
-# import Resolvers.user from "generated/prisma.graphql"
+# import Resolvers.User from "generated/prisma.graphql"
 # import Query.event from "generated/prisma.graphql"
 # import Query.vendor from "generated/prisma.graphql"
 
@@ -12,5 +12,7 @@
 # import Query.volunteer from "generated/prisma.graphql"
 
 # import Query.user from "generated/prisma.graphql"
+# import Query.users from "generated/prisma.graphql"
 # import Query.user_event from "generated/prisma.graphql"
 # import Query.talent from "generated/prisma.graphql"
+# import Mutation.createuser from "generated/prisma.graphql"
