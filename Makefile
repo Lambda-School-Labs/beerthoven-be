@@ -64,13 +64,13 @@ prisma-generate:
 	@export $$(cat .env | xargs)			&& \
 	 echo															&& \
 	 echo Generating Prisma schema		&& \
-	 cd prisma && yarn generate
+	 cd prisma && yarn install && yarn generate
 
 local-prisma-deploy:
 	@export $$(cat .env | xargs)			&& \
 	 echo															&& \
 	 echo Deploying Prisma schema			&& \
-	 cd prisma && yarn install && prisma deploy
+	 cd prisma && yarn install && yarn deploy
 
 local-prisma-reseed:
 	@export $$(cat .env | xargs)			&& \
@@ -78,14 +78,14 @@ local-prisma-reseed:
 	 echo Deploying Prisma schema			&& \
 	 cd prisma 												&& \
 	 yarn install											&& \
-	 prisma reset --force							&& \
-	 prisma seed
+	 yarn reset											  && \
+	 yarn seed
 
 local-prisma-token:
 	@export $$(cat .env | xargs)			&& \
 	 echo															&& \
 	 echo Generating Prisma token			&& \
-	 cd prisma && prisma token
+	 cd prisma && yarn install && yarn token
 
 
 # =================================================================
