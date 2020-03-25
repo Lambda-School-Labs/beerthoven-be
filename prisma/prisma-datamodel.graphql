@@ -89,11 +89,10 @@ type Volunteer {
 
 type User {
   id: ID! @id
-  date_created: Int!
+  date_created: DateTime! @createdAt
   username: String!
-  password: String!
-  person: Person!
-  role: Int!
+  person: Person
+  role: Int
 }
 
 type User_Event {

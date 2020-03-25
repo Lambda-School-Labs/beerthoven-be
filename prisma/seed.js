@@ -7,14 +7,18 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// date_created: DateTime! @createdAt
+//   username: String!
+//   person: Person
+//   role: Int
+
 async function main() {
   // Generate a bunch of random users
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 10; i++) {
     await prisma.createUser({
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      underage: Math.random() >= 0.5,
-      role_id: getRandomInt(10000, 99999)
+      username: faker.internet.userName(),
+      
+     
     });
   }
 }

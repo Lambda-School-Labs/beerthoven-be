@@ -5,17 +5,19 @@
  * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
  * @returns { Promise }
  */
-const profile = async (parent, _, context) => {
-  console.log("User.profile.parent: %j", parent)
+const person = async (parent, _, context) => {
+  console.log("User.person.parent: %j", parent)
 
-  const profile = await context.prisma.user({id: parent.id}).profile();
+  const person = await context.prisma.user({
+    id: parent.id
+  }).person();
 
-  console.log("User.profile: %j", profile)
-  
-  return profile;
+  console.log("User.person: %j", person)
+
+  return person;
 };
 
 
 module.exports = {
-  profile,
+  person,
 };
