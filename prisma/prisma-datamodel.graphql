@@ -1,4 +1,4 @@
-type Events {
+type event {
   event_id: ID! @id
   event_name: String!
   event_type: String!
@@ -17,8 +17,8 @@ type Events {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendors: [Vendor]!
-  setup_costs: Int 
+  vendor: [Vendor]!
+  setup_costs: Int
   talent_costs: Int
   opening_time: Int
   closing_time: Int
@@ -38,7 +38,7 @@ type user_talent {
   event_ticket: Int
 }
 
-type talent_events {
+type talent_event {
   talent_event_id: Int
   talent_id: Int
   event_id: Int
@@ -57,7 +57,7 @@ type person {
   city: String
   state: String
   zip: String
-  tickets: [ticket]
+  ticket: [ticket]
   donation: [donation]
 }
 
@@ -74,10 +74,11 @@ type donation {
 }
 
 type volunteer {
-  
+  id: ID! @id
+  person: String!
 }
 
-type users {
+type user {
   id: ID! @id
   date_created: Int!
   username: String!
@@ -86,7 +87,7 @@ type users {
   role: Int!
 }
 
-type user_events {
+type user_event {
   user_event_id: ID! @id
   user_id: Int
   event_id: Int!
@@ -110,12 +111,12 @@ type talent {
   agent_name_last: String
   agent_phone_number: Int
   number_of_years_performing: Int
-  number_of_previous_performances: Int
+  number_of_previous_performance: Int
   average_number_of_shows_per_week: Int
   performance_genre: String
   portfolio_url: String
-  backup_performers_icoe: Boolean
-  number_of_performers: Int
+  backup_performer_icoe: Boolean
+  number_of_performer: Int
   willing_to_be_own_emcee: Boolean
   takes_requests: Boolean
   setup_themselves: Boolean
