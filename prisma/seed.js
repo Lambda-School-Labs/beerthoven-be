@@ -1,11 +1,22 @@
 const { prisma } = require("../apollo/src/generated/prisma-client");
 var faker = require("faker");
 
-const performanceType = ['Aria', 'Cadenza', 'Concerto', 'Chamber music', 'Movement', 'Sonata', 'Opera', 'Opus', 'Overture', 'Symphony'];
+const performanceType = [
+  "Aria",
+  "Cadenza",
+  "Concerto",
+  "Chamber music",
+  "Movement",
+  "Sonata",
+  "Opera",
+  "Opus",
+  "Overture",
+  "Symphony"
+];
 
 Array.prototype.randomPerformance = function() {
   return this[Math.floor(Math.random() * this.length)];
-}
+};
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -51,7 +62,7 @@ async function main() {
     await prisma.createVendor({
       company_name: faker.company.companyName(),
       email: faker.internet.email(),
-      vender_type: faker.company.companySuffix()
+      vendor_type: faker.company.companySuffix()
     });
 
     await prisma.createPerson({
@@ -68,7 +79,7 @@ async function main() {
       // donation: [Donation],
       // volunteer: [Volunteer],
     });
-    
+
     await prisma.createTicket({});
 
     await prisma.createDonation({});
@@ -113,9 +124,8 @@ async function main() {
       provides_all_own_equipment: faker.random.boolean(),
       number_of_outlets_required: getRandomInt(1, 20),
       number_of_special_outlets_required: getRandomInt(1, 5),
-      willing_to_meet_prior_to_show: faker.random.boolean(),
-    })
-
+      willing_to_meet_prior_to_show: faker.random.boolean()
+    });
   }
 }
 
