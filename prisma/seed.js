@@ -29,19 +29,19 @@ async function main() {
       city: faker.address.city(),
       state: faker.address.stateAbbr(),
       zip: faker.address.zipCode(),
-      tickets: [Ticket],
-      donation: [Donation],
-      volunteer: [Volunteer],
+      // tickets: [Ticket],
+      // donation: [Donation],
+      // volunteer: [Volunteer],
     })
-    await prisma.createTicket({
-      person: Person
-    })
-    await prisma.createDonation({
-      person: Person
-    })
-    await prisma.createVolunteer({
-      person: Person
-    })
+    // await prisma.createTicket({
+    //   person: Person
+    // })
+    // await prisma.createDonation({
+    //   person: Person
+    // })
+    // await prisma.createVolunteer({
+    //   person: Person
+    // })
   }
 }
 
