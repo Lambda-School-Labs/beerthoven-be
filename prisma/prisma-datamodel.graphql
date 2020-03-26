@@ -17,8 +17,10 @@ type Event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [Vendor]!
-  setup_costs: Int 
+  vendor: [Vendor]! 
+  talent: [Talent]! 
+  volunteer: [Volunteer] 
+  setup_costs: Int
   talent_costs: Int
   opening_time: Int
   closing_time: Int
@@ -34,16 +36,17 @@ type Event {
 
 type Vendor {
   id: ID! @id
-  name: String!
+  company_name: String!
   email: String!
   vendor_type: String
+  event: [Event] 
 }
 
-type User_Talent {
-  id: ID! @id
-  ticket_id: Int
-  event_ticket: Int
-}
+# type User_Talent {
+#   id: ID! @id
+#   ticket_id: Int
+#   event_ticket: Int
+# }
 
 type Talent_Event {
   talent_event_id: ID! @id
@@ -64,27 +67,27 @@ type Person {
   city: String
   state: String
   zip: String
-  tickets: [Ticket]
-  donation: [Donation]
-  volunteer: [Volunteer] 
+  ticket: [Ticket] 
+  donation: [Donation] 
+  volunteer: [Volunteer] @relation(link: TABLE)
 }
 
 type Ticket {
   id: ID! @id
-  person: Person
-  # find out what data is needed for ticket
+  person: Person @relation(link: INLINE)
+  event: Event!
 }
 
 type Donation {
   id: ID! @id
-  person: Person
+  person: Person @relation(link: INLINE)
   # find out what data is needed for donation
 }
 
 type Volunteer {
   id: ID! @id
-  person: Person
-  # find out what data is needed for volunteer
+  person: Person!
+  event: [Event]! @relation(link: TABLE)
 }
 
 type User {
@@ -95,19 +98,12 @@ type User {
   role: Int
 }
 
-type User_Event {
-  user_event_id: ID! @id
-  user_id: Int
-  event_id: Int!
-  visiter: Boolean!
-  admin: Boolean!
-}
-
 type Talent {
-  talent_id: ID! @id
+  id: ID! @id
   talent_name: String!
   performance_type: String!
   address: String!
+  event: [Event]! @relation(link: TABLE)
   website: String
   min_payment: Int
   hourly_rate: Int
