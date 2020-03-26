@@ -75,7 +75,7 @@ type Person {
 type Ticket {
   id: ID! @id
   person: Person @relation(link: INLINE)
-  event: Event!
+  event: Event # made it not required to test
 }
 
 type Donation {
@@ -86,8 +86,8 @@ type Donation {
 
 type Volunteer {
   id: ID! @id
-  person: Person!
-  event: [Event]! @relation(link: TABLE)
+  person: Person # made it not required to test
+  event: [Event] @relation(link: TABLE) # made it not required to test
 }
 
 type User {
@@ -103,7 +103,7 @@ type Talent {
   talent_name: String!
   performance_type: String!
   address: String!
-  event: [Event]! @relation(link: TABLE)
+  event: [Event] @relation(link: TABLE) # made it not required to test
   website: String
   min_payment: Int
   hourly_rate: Int
@@ -113,7 +113,7 @@ type Talent {
   availability_days_of_week: String
   agent_name_first: String
   agent_name_last: String
-  agent_phone_number: Int
+  agent_phone_number: String
   number_of_years_performing: Int
   number_of_previous_performance: Int
   average_number_of_shows_per_week: Int
