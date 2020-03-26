@@ -7,7 +7,7 @@
 
 const Query = require('./Query');
 const Mutation = require('./Mutation');
-const User = require('./User');
+const User = require('./Person');
 
 const resolvers = {
   Query,

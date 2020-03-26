@@ -7,6 +7,11 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+// date_created: DateTime! @createdAt
+//   username: String!
+//   person: Person
+//   role: Int
+
 async function main() {
   // Generate a bunch of random users
   for (var i = 0; i < 20; i++) {
@@ -24,20 +29,21 @@ async function main() {
       city: faker.address.city(),
       state: faker.address.stateAbbr(),
       zip: faker.address.zipCode(),
-      tickets: [Ticket],
-      donation: [Donation],
-      volunteer: [Volunteer],
+      // tickets: [Ticket],
+      // donation: [Donation],
+      // volunteer: [Volunteer],
     })
-    await prisma.createTicket({
-      person: Person
-    })
-    await prisma.createDonation({
-      person: Person
-    })
-    await prisma.createVolunteer({
-      person: Person
-    })
+    // await prisma.createTicket({
+    //   person: Person
+    // })
+    // await prisma.createDonation({
+    //   person: Person
+    // })
+    // await prisma.createVolunteer({
+    //   person: Person
+    // })
   }
 } 
 
 main().catch(e => console.error(e));
+// hello
