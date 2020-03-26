@@ -54,7 +54,7 @@ type Talent_Event {
 
 type Person {
   id: ID! @id
-  date_created: DateTime!
+  date_created: DateTime! @createdAt
   first_name: String!
   last_name: String!
   email: String!
