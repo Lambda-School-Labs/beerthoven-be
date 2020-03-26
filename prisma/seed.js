@@ -1,5 +1,5 @@
-const { prisma } = require('../apollo/src/generated/prisma-client')
-var faker = require('faker');
+const { prisma } = require("../apollo/src/generated/prisma-client");
+var faker = require("faker");
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
@@ -17,7 +17,7 @@ async function main() {
   for (var i = 0; i < 20; i++) {
     await prisma.createUser({
       username: faker.internet.userName(),
-      role: getRandomInt(1, 3),
+      role: getRandomInt(1, 3)
     });
     await prisma.createPerson({
       first_name: faker.name.firstName(),
@@ -28,11 +28,12 @@ async function main() {
       address2: faker.address.secondaryAddress(),
       city: faker.address.city(),
       state: faker.address.stateAbbr(),
-      zip: faker.address.zipCode(),
+      zip: faker.address.zipCode()
       // tickets: [Ticket],
       // donation: [Donation],
       // volunteer: [Volunteer],
-    })
+    });
+
     // await prisma.createTicket({
     //   person: Person
     // })
@@ -43,7 +44,7 @@ async function main() {
     //   person: Person
     // })
   }
-} 
+}
 
 main().catch(e => console.error(e));
 // hello
