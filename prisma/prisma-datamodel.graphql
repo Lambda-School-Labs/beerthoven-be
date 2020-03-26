@@ -64,26 +64,26 @@ type Person {
   city: String
   state: String
   zip: String
-  tickets: [Ticket]!
-  donation: [Donation]!
-  volunteer: [Volunteer]! 
+  tickets: [Ticket]
+  donation: [Donation]
+  volunteer: [Volunteer] 
 }
 
 type Ticket {
   id: ID! @id
-  person: Person!
+  person: Person
   # find out what data is needed for ticket
 }
 
 type Donation {
   id: ID! @id
-  person: Person!
+  person: Person
   # find out what data is needed for donation
 }
 
 type Volunteer {
   id: ID! @id
-  person: Person!  
+  person: Person
   # find out what data is needed for volunteer
 }
 
