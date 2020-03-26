@@ -9,14 +9,35 @@ function getRandomInt(min, max) {
 
 async function main() {
   // Generate a bunch of random users
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 20; i++) {
     await prisma.createUser({
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      underage: Math.random() >= 0.5,
-      role_id: getRandomInt(10000, 99999)
+      username: faker.internet.userName(),
+      role: getRandomInt(1, 3),
     });
+    await prisma.createPerson({
+      first_name: faker.name.firstName(),
+      last_name: faker.name.lastName(),
+      email: faker.internet.email(),
+      phone: faker.phone.phoneNumber(),
+      address: faker.address.streetAddress(),
+      address2: faker.address.secondaryAddress(),
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode(),
+      tickets: [Ticket],
+      donation: [Donation],
+      volunteer: [Volunteer],
+    })
+    await prisma.createTicket({
+      person: Person
+    })
+    await prisma.createDonation({
+      person: Person
+    })
+    await prisma.createVolunteer({
+      person: Person
+    })
   }
-}
+} 
 
 main().catch(e => console.error(e));
