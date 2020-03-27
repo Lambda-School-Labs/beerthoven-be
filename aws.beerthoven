@@ -1,0 +1,6 @@
+ApplicationName=beerthoven
+ApplicationDomainNamespace=beerthoven.dev
+
+ApolloServicePort=8000
+PrismaServicePort=8000
+

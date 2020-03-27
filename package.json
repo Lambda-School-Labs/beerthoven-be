@@ -16,5 +16,13 @@
   "bugs": {
     "url": "https://github.com/Lambda-School-Labs/beerthoven-be/issues"
   },
-  "homepage": "https://github.com/Lambda-School-Labs/beerthoven-be#readme"
+  "homepage": "https://github.com/Lambda-School-Labs/beerthoven-be#readme",
+  "dependencies": {
+    "prismatopia-apollo": "file:apollo",
+    "server": "^1.0.27"
+  },
+  "devDependencies": {
+    "apollo-server-testing": "^2.11.0",
+    "jest": "^25.2.2"
+  }
 }

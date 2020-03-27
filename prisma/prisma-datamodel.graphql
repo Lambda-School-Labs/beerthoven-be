@@ -1,4 +1,4 @@
-type Events {
+type Event {
   event_id: ID! @id
   event_name: String!
   event_type: String!
@@ -17,8 +17,10 @@ type Events {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendors: [Vendor]!
-  setup_costs: Int 
+  vendor: [Vendor]! 
+  talent: [Talent]! 
+  volunteer: [Volunteer] 
+  setup_costs: Int
   talent_costs: Int
   opening_time: Int
   closing_time: Int
@@ -32,22 +34,30 @@ type Events {
   sales_net: Int
 }
 
-type user_talent {
+type Vendor {
   id: ID! @id
-  ticket_id: Int
-  event_ticket: Int
+  company_name: String!
+  email: String!
+  vendor_type: String
+  event: [Event] 
 }
 
-type talent_events {
-  talent_event_id: Int
-  talent_id: Int
-  event_id: Int
-  admin: Boolean
-}
+# type User_Talent {
+#   id: ID! @id
+#   ticket_id: Int
+#   event_ticket: Int
+# }
 
-type person {
+# type Talent_Event {
+#   talent_event_id: ID! @id
+#   talent_id: Int
+#   event_id: Int
+#   admin: Boolean
+# }
+
+type Person {
   id: ID! @id
-  date_created: Int!
+  date_created: DateTime! @createdAt
   first_name: String!
   last_name: String!
   email: String!
@@ -57,48 +67,43 @@ type person {
   city: String
   state: String
   zip: String
-  tickets: [ticket]
-  donation: [donation]
+  ticket: [Ticket] 
+  donation: [Donation] 
+  volunteer: [Volunteer] @relation(link: TABLE)
 }
 
-type ticket {
+type Ticket {
   id: ID! @id
-  person: person!
-  # find out what data is needed for ticket
+  person: Person @relation(link: INLINE)
+  event: Event # made it not required to test
 }
 
-type donation {
+type Donation {
   id: ID! @id
-  person: person!
+  person: Person @relation(link: INLINE)
   # find out what data is needed for donation
 }
 
-type volunteer {
-  
-}
-
-type users {
+type Volunteer {
   id: ID! @id
-  date_created: Int!
+  person: Person # made it not required to test
+  event: [Event] @relation(link: TABLE) # made it not required to test
+}
+
+type User {
+  id: ID! @id
+  date_created: DateTime! @createdAt
   username: String!
-  password: String!
-  person: person!
-  role: Int!
+  person: Person
+  role: Int
 }
 
-type user_events {
-  user_event_id: ID! @id
-  user_id: Int
-  event_id: Int!
-  visiter: Boolean!
-  admin: Boolean!
-}
-
-type talent {
-  talent_id: ID! @id
+type Talent {
+  id: ID! @id
   talent_name: String!
   performance_type: String!
   address: String!
+  event: [Event] @relation(link: TABLE) # made it not required to test
   website: String
   min_payment: Int
   hourly_rate: Int
@@ -108,14 +113,14 @@ type talent {
   availability_days_of_week: String
   agent_name_first: String
   agent_name_last: String
-  agent_phone_number: Int
+  agent_phone_number: String
   number_of_years_performing: Int
-  number_of_previous_performances: Int
+  number_of_previous_performance: Int
   average_number_of_shows_per_week: Int
   performance_genre: String
   portfolio_url: String
-  backup_performers_icoe: Boolean
-  number_of_performers: Int
+  backup_performer_icoe: Boolean
+  number_of_performer: Int
   willing_to_be_own_emcee: Boolean
   takes_requests: Boolean
   setup_themselves: Boolean

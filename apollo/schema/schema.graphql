@@ -1,3 +1,19 @@
+
+
+# import Query.event from "generated/prisma.graphql"
+# import Query.events from "generated/prisma.graphql"
+# import Query.vendor from "generated/prisma.graphql"
+
+# import Query.userTalent from "generated/prisma.graphql"
+# import Query.talentEvent from "generated/prisma.graphql"
+# import Query.person from "generated/prisma.graphql"
+
+# import Query.ticket from "generated/prisma.graphql"
+# import Query.donation from "generated/prisma.graphql"
+# import Query.volunteer from "generated/prisma.graphql"
+
 # import Query.user from "generated/prisma.graphql"
 # import Query.users from "generated/prisma.graphql"
-
+# import Query.userEvent from "generated/prisma.graphql"
+# import Query.talent from "generated/prisma.graphql"
+# import Mutation.createUser from "generated/prisma.graphql"

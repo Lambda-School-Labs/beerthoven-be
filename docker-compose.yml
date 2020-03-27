@@ -5,7 +5,7 @@ services:
     build:
       context: ./apollo
       dockerfile: Dockerfile
-    command: sh -c "yarn global add nodemon && nodemon -L src/index.js"
+    command: sh -c "yarn global add nodemon && nodemon -v && NODE_ENV=development nodemon -V -L src/index.js"
     volumes:
       - ./apollo/src:/app/src
       - ./apollo/schema:/app/schema
@@ -20,8 +20,8 @@ services:
       PRISMA_ENDPOINT: http://prisma:${PRISMA_LISTEN_PORT:-7000}
       PRISMA_SECRET: ${PRISMA_SECRET:?You must specify PRISMA_SECRET}
 
-      OAUTH_TOKEN_ENDPOINT: ${OAUTH_TOKEN_ENDPOINT:?You must specify OAUTH_TOKEN_ENDPOINT}
-      OAUTH_CLIENT_ID: ${OAUTH_CLIENT_ID:?You must specify OAUTH_CLIENT_ID}
+      # OAUTH_TOKEN_ENDPOINT: ${OAUTH_TOKEN_ENDPOINT:?You must specify OAUTH_TOKEN_ENDPOINT}
+      # OAUTH_CLIENT_ID: ${OAUTH_CLIENT_ID:?You must specify OAUTH_CLIENT_ID}
 
   # The Prisma service
   prisma:
