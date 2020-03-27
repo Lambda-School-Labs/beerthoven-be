@@ -8,9 +8,9 @@
 const users = async (_, args, context) => {
   console.log("Query.users.args: %j", args)
 
-  //consusersrs = await context.prismusersrs(args.where);
+  // const users = await context.prismaUsers(args.where);
 
-  //console.log("Query.usser: %j"usersrs)
+  // console.log("Query.usser: %j", users)
   
   return [];
 };

@@ -92,7 +92,7 @@ async function main() {
     });
 
     await prisma.createTalent({
-      talent_name: faker.name.firstName(),
+      talent_name: faker.name.findName(),
       performance_type: performanceType.randomPerformance(),
       address: faker.address.streetAddress(),
       // event: [Event]! @relation(name: "EventTalent")

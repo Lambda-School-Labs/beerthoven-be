@@ -7,7 +7,7 @@
  */
 const createUser = (_, args, context) => {
   console.log("createUser.args: %j", args)
-
+  // const userTaken = 
   const user = context.prisma.createUser(args.data);  
 
   return user;

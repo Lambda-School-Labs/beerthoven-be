@@ -48,12 +48,12 @@ type Vendor {
 #   event_ticket: Int
 # }
 
-type Talent_Event {
-  talent_event_id: ID! @id
-  talent_id: Int
-  event_id: Int
-  admin: Boolean
-}
+# type Talent_Event {
+#   talent_event_id: ID! @id
+#   talent_id: Int
+#   event_id: Int
+#   admin: Boolean
+# }
 
 type Person {
   id: ID! @id
