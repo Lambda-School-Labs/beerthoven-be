@@ -1,12 +1,14 @@
 const OktaJwtVerifier = require('@okta/jwt-verifier');
+require('dotenv').config();
 
 // Constants
 const AUD = 'api://default';
 
 // Instantiate OKTA client with Mission Control credentials
 const O = new OktaJwtVerifier({
-  issuer: process.env.OAUTH_TOKEN_ENDPOINT,
-  clientId: process.env.OAUTH_CLIENT_ID,
+  // issuer: process.env.ISSUER,
+  issuer: 'https://Beerthoven.okta.com/oauth2/default',
+  clientId: process.env.CLIENT_ID,
   assertClaims: {
     aud: AUD,
   },

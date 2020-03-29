@@ -1,5 +1,6 @@
 // @ts-check
-
+const Logger = require('../logger');
+const logger = new Logger('logger.log');
 /**
  * @param { import('../generated/prisma-client').User } parent
  * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
@@ -7,7 +8,7 @@
  */
 const person = async (parent, _, context) => {
   console.log("User.person.parent: %j", parent)
-
+  logger.log('Is this working')
   const person = await context.prisma.user({
     id: parent.id
   }).person();

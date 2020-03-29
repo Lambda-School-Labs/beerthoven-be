@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/beerthoven-be#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "prismatopia-apollo": "file:apollo",
     "server": "^1.0.27"
   },
