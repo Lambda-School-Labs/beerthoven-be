@@ -7,7 +7,7 @@ const AUD = 'api://default';
 // Instantiate OKTA client with Mission Control credentials
 const O = new OktaJwtVerifier({
   // issuer: process.env.ISSUER,
-  issuer: 'https://Beerthoven.okta.com/oauth2/default',
+  issuer: `https://${process.env.ISSUER}`,
   clientId: process.env.CLIENT_ID,
   assertClaims: {
     aud: AUD,
