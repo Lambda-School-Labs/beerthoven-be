@@ -16,6 +16,10 @@
 # import Query.users from "generated/prisma.graphql"
 # import Query.userEvent from "generated/prisma.graphql"
 # import Query.talent from "generated/prisma.graphql"
+
 # import Mutation.createUser from "generated/prisma.graphql"
 # import Mutation.createPerson from "generated/prisma.graphql"
 # import Mutation.createEvent from "generated/prisma.graphql"
+# import Mutation.createVendor from "generated/prisma.graphql"
+# import Mutation.deleteUser from "generated/prisma.graphql"
+# import Mutation.updateUser from "generated/prisma.graphql"

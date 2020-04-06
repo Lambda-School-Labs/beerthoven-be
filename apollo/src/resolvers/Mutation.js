@@ -35,6 +35,28 @@ const Mutation = {
     return prisma.createUser(args.data, info); 
   },
 
+  async deleteUser(parent, args, { prisma }, info) {
+    const findUser = await prisma.$exists.user({ id: args.where.id });
+
+    if (!findUser) throw new Error('No user with that id...');
+
+    return prisma.deleteUser({ id: args.where.id })
+  },
+
+  async updateUser(parent, args, { prisma }, info) {
+    const findUser = await prisma.$exists.user({ id: args.where.id });
+
+    if (!findUser) throw new Error('No user with that id...');
+
+
+    return prisma.updateUser({
+        where: {
+          id: args.where.id
+        },
+        data: args.data
+    }, info)
+  },
+
   async createPerson(parent, args, { prisma }, info) {
     const emailTaken = await prisma.$exists.person({ email: args.data.email });
 
@@ -47,8 +69,17 @@ const Mutation = {
     if (!args.data.event_name) throw new Error('Event name required!');
 
     return prisma.createEvent(args.data, info)
+  },
+
+  async createVendor(parent, args, { prisma }, info) {
+    const emailTaken = await prisma.$exists.vendor({ email: args.data.email });
+
+    if (emailTaken) throw new Error('Email taken');
+
+    return prisma.createVendor(args.data, info);
   }
 }
+
 
 
 module.exports = Mutation;
