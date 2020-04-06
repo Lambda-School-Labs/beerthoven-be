@@ -20,6 +20,19 @@
 # import Mutation.createUser from "generated/prisma.graphql"
 # import Mutation.createPerson from "generated/prisma.graphql"
 # import Mutation.createEvent from "generated/prisma.graphql"
+
 # import Mutation.createVendor from "generated/prisma.graphql"
 # import Mutation.deleteUser from "generated/prisma.graphql"
 # import Mutation.updateUser from "generated/prisma.graphql"
+
+# import Mutation.deletePerson from "generated/prisma.graphql"
+# import Mutation.updatePerson from "generated/prisma.graphql"
+# import Mutation.createEvent from "generated/prisma.graphql"
+
+# import Mutation.updateEvent from "generated/prisma.graphql"
+# import Mutation.updateVendor from "generated/prisma.graphql"
+# import Mutation.deleteVendor from "generated/prisma.graphql"
+
+# import Mutation.createTalent from "generated/prisma.graphql"
+# import Mutation.updateTalent from "generated/prisma.graphql"
+# import Mutation.deleteTalent from "generated/prisma.graphql"
