@@ -10,14 +10,15 @@ const resolvers = require("./resolvers");
 const context = require("./context");
 
 
+
 async function main() {
-  console.log("Importing schema")
+  // console.log("Importing schema")
 
   const typeDefs = await importSchema("schema/schema.graphql")
 
-  console.log(typeDefs)
+  // console.log(typeDefs)
 
-  console.log("Imported schema")
+  // console.log("Imported schema")
 
   const server = new ApolloServer({
     resolvers,
@@ -32,6 +33,7 @@ async function main() {
     console.log(`🚀  Server ready at ${url}`);
   });
 }
+
 
 main();
 

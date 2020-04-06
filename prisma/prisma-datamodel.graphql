@@ -70,6 +70,7 @@ type Person {
   ticket: [Ticket] 
   donation: [Donation] 
   volunteer: [Volunteer] @relation(link: TABLE)
+  # vaunteer: [Volunteer] @relation(name: "AddToPerson", onDelete: CASCADE)
 }
 
 type Ticket {
@@ -86,8 +87,11 @@ type Donation {
 
 type Volunteer {
   id: ID! @id
-  person: Person # made it not required to test
+  person: Person! 
+  # person: Person! @relation(name: "AddToPerson", onDelete: CASCADE) 
+  # made it not required to test
   event: [Event] @relation(link: TABLE) # made it not required to test
+  # 
 }
 
 type User {
@@ -134,3 +138,18 @@ type Talent {
   number_of_special_outlets_required: Int
   willing_to_meet_prior_to_show: Boolean
 }
+
+# type Subscription {
+#   user: AdminSubscriptionPayload!
+# }
+
+# enum mutationType {
+#   ADMIN
+#   VOLUNTEER
+#   USER
+# }
+
+# type AdminSubscriptionPayload {
+#   mutation: MutationType!
+#   data: User!
+# }
