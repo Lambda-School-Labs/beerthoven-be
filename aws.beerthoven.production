@@ -2,5 +2,7 @@ EnvironmentName=production
 
 ApolloDockerImage=lambdaschoollabs/beerthoven-apollo:latest
 
-OAuthTokenEndpoint=https://dev-797786.okta.com/oauth2/default
-OAuthClientID=0oa4ysumx9lGUXBwM4x6
+JwksUri=https://okta.beerthoven.dev/oauth2/default/v1/keys
+JwtIssuer=https://okta.beerthoven.dev/oauth2/default
+
+LogLevel=debug

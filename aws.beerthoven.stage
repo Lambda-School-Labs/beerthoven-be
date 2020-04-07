@@ -1,6 +1,8 @@
 EnvironmentName=stage
 
-ApolloDockerImage=lambdaschoollabs/prismatopia-apollo:latest
+ApolloDockerImage=lambdaschoollabs/beerthoven-apollo:stage
 
-OAuthTokenEndpoint=https://dev-173777.okta.com/oauth2/default
-OAuthClientID=0oa23ze1sdfwtoKNQ357
+JwksUri=https://okta.beerthoven.dev/oauth2/default/v1/keys
+JwtIssuer=https://okta.beerthoven.dev/oauth2/default
+
+LogLevel=debug
