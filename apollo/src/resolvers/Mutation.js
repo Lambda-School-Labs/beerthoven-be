@@ -1,6 +1,6 @@
 
 // @ts-check
-const { prisma } = require("../generated/prisma-client")
+// const { prisma } = require("../generated/prisma-client")
 
 /**
  * @param {{ data: import('../generated/prisma-client').UserCreateInput }} args
@@ -31,7 +31,6 @@ const Mutation = {
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
     if (!findUser) throw new Error('No user with that id...');
-
 
     return prisma.updateUser({
         where: {
@@ -79,20 +78,19 @@ const Mutation = {
   },
 
   async updateEvent(parent, args, { prisma }, info) {
-    console.log(args.where.event_id)
-    if (!args.where.event_id) throw new Error('Enter event ID...');
+    console.log(args.where.id)
+    if (!args.where.id) throw new Error('Enter event ID...');
 
-    const findEvent = await prisma.$exists.event({ event_id: args.where.event_id })
+    const findEvent = await prisma.$exists.event({ id: args.where.id })
 
     if (!findEvent) throw new Error('Event not found');
 
     return prisma.updateEvent({
       where: {
-        event_id: args.where.event_id
+        id: args.where.id
       },
       data: args.data
-    })
-
+    });
   },
 
   async createVendor(parent, args, { prisma }, info) {
@@ -129,9 +127,10 @@ const Mutation = {
   async createTalent(parent, args, { prisma }, info) {
     if (!args.data.talent_name || !args.data.performance_type || !args.data.address) throw new Error('Required fields name, type, address!');
 
-    // const usernameTaken = await prisma.$exists.talent({email: args.data.email});
+    const emailTaken = await prisma.$exists.talent({ email: args.data.email });
 
-    // if (usernameTaken) throw new Error('Email taken');
+    if (emailTaken) throw new Error('Email taken');
+    
     return prisma.createTalent(args.data);
   },
 
@@ -158,6 +157,10 @@ const Mutation = {
     return prisma.deleteTalent({ id: args.where.id })
   },
 
+  //  Should we create a ticket table considering tickets come from a 3rd party source (eventbrite)?
+  //  Should we create a donation table considering they come from a 3rd party source (square)?
+  //  How would we connect those sources to auto import to the correct person profile?
+  //  Not sure how to accomplish without manual entry.
 
 
 

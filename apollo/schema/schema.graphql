@@ -3,6 +3,7 @@
 # import Query.event from "generated/prisma.graphql"
 # import Query.events from "generated/prisma.graphql"
 # import Query.vendor from "generated/prisma.graphql"
+# import Query.vendors from "generated/prisma.graphql"
 
 # import Query.userTalent from "generated/prisma.graphql"
 # import Query.talentEvent from "generated/prisma.graphql"
@@ -10,30 +11,41 @@
 # import Query.persons from "generated/prisma.graphql"
 
 # import Query.ticket from "generated/prisma.graphql"
+# import Query.tickets from "generated/prisma.graphql"
+
 # import Query.donation from "generated/prisma.graphql"
+# import Query.donations from "generated/prisma.graphql"
+
 # import Query.volunteer from "generated/prisma.graphql"
+# import Query.volunteers from "generated/prisma.graphql"
 
 # import Query.user from "generated/prisma.graphql"
 # import Query.users from "generated/prisma.graphql"
 # import Query.userEvent from "generated/prisma.graphql"
+
 # import Query.talent from "generated/prisma.graphql"
+# import Query.talents from "generated/prisma.graphql"
+
+
 
 # import Mutation.createUser from "generated/prisma.graphql"
-# import Mutation.createPerson from "generated/prisma.graphql"
-# import Mutation.createEvent from "generated/prisma.graphql"
-
-# import Mutation.createVendor from "generated/prisma.graphql"
 # import Mutation.deleteUser from "generated/prisma.graphql"
 # import Mutation.updateUser from "generated/prisma.graphql"
 
+# import Mutation.createPerson from "generated/prisma.graphql"
 # import Mutation.deletePerson from "generated/prisma.graphql"
 # import Mutation.updatePerson from "generated/prisma.graphql"
-# import Mutation.createEvent from "generated/prisma.graphql"
 
+# import Mutation.createEvent from "generated/prisma.graphql"
 # import Mutation.updateEvent from "generated/prisma.graphql"
+
+# import Mutation.createVendor from "generated/prisma.graphql"
 # import Mutation.updateVendor from "generated/prisma.graphql"
 # import Mutation.deleteVendor from "generated/prisma.graphql"
 
 # import Mutation.createTalent from "generated/prisma.graphql"
 # import Mutation.updateTalent from "generated/prisma.graphql"
 # import Mutation.deleteTalent from "generated/prisma.graphql"
+
+
+

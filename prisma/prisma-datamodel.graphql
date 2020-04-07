@@ -1,5 +1,5 @@
 type Event {
-  event_id: ID! @id
+  id: ID! @id
   event_name: String!
   event_type: String!
   event_address: String!
@@ -41,7 +41,6 @@ type Vendor {
   vendor_type: String!
   event: [Event] 
 }
-
 
 type Person {
   id: ID! @id
