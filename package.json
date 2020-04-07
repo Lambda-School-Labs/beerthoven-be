@@ -18,12 +18,16 @@
   },
   "homepage": "https://github.com/Lambda-School-Labs/beerthoven-be#readme",
   "dependencies": {
+    "bcrypt": "^4.0.1",
     "dotenv": "^8.2.0",
     "prismatopia-apollo": "file:apollo",
     "server": "^1.0.27"
   },
   "devDependencies": {
+    "@types/jest": "^25.2.1",
     "apollo-server-testing": "^2.11.0",
-    "jest": "^25.2.2"
+    "graphql-tester": "0.0.5",
+    "jest": "^25.2.2",
+    "ts-jest": "^25.3.1"
   }
 }
