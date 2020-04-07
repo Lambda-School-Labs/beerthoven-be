@@ -7,6 +7,7 @@
 # import Query.userTalent from "generated/prisma.graphql"
 # import Query.talentEvent from "generated/prisma.graphql"
 # import Query.person from "generated/prisma.graphql"
+# import Query.persons from "generated/prisma.graphql"
 
 # import Query.ticket from "generated/prisma.graphql"
 # import Query.donation from "generated/prisma.graphql"

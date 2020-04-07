@@ -1,8 +1,7 @@
 
 // @ts-check
 const { prisma } = require("../generated/prisma-client")
-// const Logger = require('../logger');
-// const logger = new Logger('logger.log')
+
 /**
  * @param {{ data: import('../generated/prisma-client').UserCreateInput }} args
  * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
