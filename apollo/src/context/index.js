@@ -93,7 +93,9 @@ const getKey = async header => {
     throw new AuthenticationError('Not authorized');
   }
 
-  const publicKey = key.getPublicKey();
+  logger.debug("Retrieved public key from (%O) with kid (%O): %O", JWKS_URI, header.kid, key)
+
+  const publicKey = key.rsaPublicKey;
 
   return publicKey;
 };
@@ -151,8 +153,7 @@ const context = async ({ req }) => {
   const user = new User(
     (id = decodedJWT.sub),
     (name = decodedJWT.name),
-    (email = decodedJWT.email),
-    (groups = decodedJWT['http://adaptivapps.com/roles']),
+    (email = decodedJWT.email)
   );
 
   // Don't let anyone past this point if they aren't authenticated
