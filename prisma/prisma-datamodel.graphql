@@ -17,8 +17,8 @@ type Event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [Vendor]! 
-  talent: [Talent]! 
+  vendor: [Vendor] # made it not required to test
+  talent: [Talent] @relation(link: TABLE) # made it not required to test
   volunteer: [Volunteer] 
   setup_costs: Int
   talent_costs: Int
@@ -38,22 +38,10 @@ type Vendor {
   id: ID! @id
   company_name: String!
   email: String!
-  vendor_type: String
+  vendor_type: String!
   event: [Event] 
 }
 
-# type User_Talent {
-#   id: ID! @id
-#   ticket_id: Int
-#   event_ticket: Int
-# }
-
-# type Talent_Event {
-#   talent_event_id: ID! @id
-#   talent_id: Int
-#   event_id: Int
-#   admin: Boolean
-# }
 
 type Person {
   id: ID! @id
@@ -70,8 +58,7 @@ type Person {
   zip: String
   ticket: [Ticket] 
   donation: [Donation] 
-  volunteer: [Volunteer] @relation(link: TABLE)
-  # volunteer: [Volunteer] @relation(name: "AddToPerson", onDelete: CASCADE)
+  volunteer: [Volunteer] 
   date_created: DateTime! @createdAt
 }
 
@@ -79,35 +66,16 @@ type User {
   id: ID! @id
   date_created: DateTime! @createdAt
   username: String!
-  person: Person!
-  role: Role!
+  person: Person @relation(link: INLINE) # made it not required to test
+  role: Role! 
+  #@default(value: GUEST)
 }
 
 enum Role {
   ADMIN
   VOLUNTEER
-  USER
+  GUEST
 }
-
-# ADMIN
-# Volunteer
-# Guest
-
-# type Subscription {
-#   user: AdminSubscriptionPayload!
-# }
-
-# enum mutationType {
-#   ADMIN
-#   VOLUNTEER
-#   USER
-# }
-
-# type AdminSubscriptionPayload {
-#   mutation: MutationType!
-#   data: User!
-# }
-
 
 
 type Ticket {
@@ -124,13 +92,10 @@ type Donation {
 
 type Volunteer {
   id: ID! @id
-  person: Person! 
-  # person: Person! @relation(name: "AddToPerson", onDelete: CASCADE) 
+  person: Person @relation(link: INLINE)
   # made it not required to test
-  event: [Event] @relation(link: TABLE) # made it not required to test
-  # 
+  event: [Event] 
 }
-
 
 type Talent {
   id: ID! @id
@@ -138,7 +103,7 @@ type Talent {
   performance_type: String!
   address: String!
   email: String!
-  event: [Event] @relation(link: TABLE) # made it not required to test
+  event: [Event]# made it not required to test
   website: String
   min_payment: Int
   hourly_rate: Int

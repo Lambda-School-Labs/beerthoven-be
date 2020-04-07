@@ -14,6 +14,12 @@ const performanceType = [
   "Symphony"
 ];
 
+const Role = ['ADMIN', 'VOLUNTEER', 'GUEST'];
+
+Array.prototype.shuffleRoles = function() {
+  return this[Math.floor(Math.random() * this.length)]
+}
+
 Array.prototype.randomPerformance = function() {
   return this[Math.floor(Math.random() * this.length)];
 };
@@ -67,6 +73,7 @@ async function main() {
 
     await prisma.createPerson({
       first_name: faker.name.firstName(),
+      username: faker.internet.userName(),
       last_name: faker.name.lastName(),
       email: faker.internet.email(),
       phone: faker.phone.phoneNumber(),
@@ -88,13 +95,14 @@ async function main() {
 
     await prisma.createUser({
       username: faker.internet.userName(),
-      role: getRandomInt(1, 3)
+      role: Role.shuffleRoles()
     });
 
     await prisma.createTalent({
       talent_name: faker.name.findName(),
       performance_type: performanceType.randomPerformance(),
       address: faker.address.streetAddress(),
+      email: faker.internet.email(),
       // event: [Event]! @relation(name: "EventTalent")
       website: faker.internet.domainName(),
       min_payment: getRandomInt(50, 500),
