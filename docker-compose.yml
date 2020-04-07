@@ -27,6 +27,8 @@ services:
       PRISMA_ENDPOINT: http://prisma:${PRISMA_LISTEN_PORT:-7000}
       PRISMA_SECRET: ${PRISMA_SECRET:?You must specify PRISMA_SECRET}
 
+      LOG_LEVEL: ${LOG_LEVEL:-debug}
+
   # The Prisma service
   prisma:
     image: prismagraphql/prisma:1.34
