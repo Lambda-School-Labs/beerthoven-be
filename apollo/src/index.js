@@ -1,41 +1,53 @@
 // @ts-check
 
-
+// Apollo dependencies
 const { importSchema } = require('graphql-import');
+const { ApolloServer, gql } = require('apollo-server');
 
 const PORT = process.env.PORT || 8000;
-const { ApolloServer, gql } = require("apollo-server");
 
-const resolvers = require("./resolvers");
-const context = require("./context");
+const checkEnvironment = () => {
+  const requiredEnvironmentVariables = ['JWT_ISSUER', 'JWKS_URI', 'PRISMA_ENDPOINT', 'PRISMA_SECRET']
 
+  let environmentReady = true;
+  for(const variableName of requiredEnvironmentVariables) {
+    if(!(variableName in process.env)) {
+      console.error("Server cannot be started without environment variable %s", variableName);
+      environmentReady = false;
+    }
+  }
 
+  if(!environmentReady) {
+    throw new Error("Missing one or more required environment variables")
+  }
+}
 
-async function main() {
-  // console.log("Importing schema")
+const resolvers = require('./resolvers');
+const context = require('./context');
 
-  const typeDefs = await importSchema("schema/schema.graphql")
+const typeDefs = gql(importSchema('schema/schema.graphql'));
 
-  // console.log(typeDefs)
-
-  // console.log("Imported schema")
+(async () => {
+  // Check the environment
+  checkEnvironment()
 
   const server = new ApolloServer({
     resolvers,
-    typeDefs: gql(typeDefs),
+    typeDefs,
     context,
     cors: true,
-    dataSources: () => ({})
+    formatError: err => {
+      // Don't give the specific errors to the client.
+      console.log('%O', err);
+      console.log('%O', err.extensions);
+
+      // Otherwise return the original error.  The error can also
+      // be manipulated in other ways, so long as it's returned.
+      return err;
+    },
   });
-  
- 
-  server.listen({port: PORT}).then(({ url }) => {
-    console.log(`🚀  Server ready at ${url}`);
-  });
-}
 
-
-main();
-
-
-
+  const { url } = await server.listen(PORT);
+  // eslint-disable-next-line no-console
+  console.log(`=========Running on ${url}=========`);
+})();
