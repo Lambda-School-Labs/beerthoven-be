@@ -7,7 +7,6 @@ export
 # =================================================================
 # = Utility targets ===============================================
 # =================================================================
-
 NO_COLOR		:= \x1b[0m
 OK_COLOR		:= \x1b[32;01m
 ERROR_COLOR	:= \x1b[31;01m
@@ -59,7 +58,7 @@ local-up: apollo-build
 	 printf "%s\n"   "= Bringing up Prismatopia"																																&& \
 	 printf "%s\n"   "======================================================================================"		&& \
 	 printf "$(NO_COLOR)"
-	 docker-compose up --build --abort-on-container-exit
+	 docker-compose up --abort-on-container-exit
 
 # =================================================================
 # = Prisma targets ================================================
@@ -111,22 +110,22 @@ apollo-push: env-APOLLO_CONTAINER_IMAGE apollo-build
 	 printf "$(NO_COLOR)"																																												&& \
 	 cd apollo && docker push $${APOLLO_CONTAINER_IMAGE}
 
-apollo-token:
+apollo-token: env-APOLLO_TOKEN_ENDPOINT env-APOLLO_CLIENT_ID env-APOLLO_CLIENT_SECRET
 	export $$(cat .env | xargs)																																								  && 			\
 	 printf "$(OK_COLOR)"																																												&& 			\
 	 printf "\n%s\n" "======================================================================================"		&& 			\
-	 printf "%s\n"   "= Grabbing token from: $${OAUTH_TOKEN_ENDPOINT}"																					&& 			\
+	 printf "%s\n"   "= Grabbing token from: $${APOLLO_TOKEN_ENDPOINT}"																					&& 			\
 	 printf "%s\n"   "======================================================================================"		&& 			\
 	 printf "$(NO_COLOR)"																																												&& 			\
 	 curl -v 																																																 					  \
-		    --url $${OKTA_DOMAIN}/oauth2/default/v1/token																									 								\
+		    --url $${APOLLO_TOKEN_ENDPOINT}																																 								\
 				--header 'accept: application/json'																																			 			\
 		    --header 'content-type: application/x-www-form-urlencoded' 																							 			\
 		    --data grant_type=password																																										\
 				--data scope=openid																																														\
 				--data-urlencode username=$${APOLLO_TEST_USERNAME}																														\
 				--data-urlencode password=$${APOLLO_TEST_PASSWORD}																														\
-				-u $${APOLLO_TEST_CLIENT_ID}:$${APOLLO_TEST_CLIENT_SECRET}
+				-u $${APOLLO_CLIENT_ID}:$${APOLLO_CLIENT_SECRET}
 
 
 # =================================================================
@@ -305,7 +304,7 @@ aws-deploy-env-prisma: aws-env-banner
 # ===========================================================================
 # Provisions the Apollo service for the environment
 # ===========================================================================
-aws-deploy-env-apollo: aws-env-banner
+aws-deploy-env-apollo: aws-env-banner apollo-push
 	@export STACK_NAME=$(APPLICATION_NAME)-$(ENVIRONMENT_NAME)-apollo 			 																							&& \
 	 export STACK_PARAMETERS="$$(cat aws.$(APPLICATION_NAME) aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | tr '\n' ' ')"	&& \
 	 printf "$(OK_COLOR)"																																																	&& \
@@ -346,8 +345,7 @@ AWS_PRISMA_MANAGEMENT_API_SECRET_ARN := $$(aws cloudformation list-exports --que
 AWS_PRISMA_MANAGEMENT_API_SECRET := $$(aws secretsmanager get-secret-value --secret-id $(AWS_PRISMA_MANAGEMENT_API_SECRET_ARN) --query 'SecretString' --output text)
 
 aws-prisma-management-secret: aws-env-banner
-	@echo PRISMA_MANAGEMENT_API_SECRET: $(AWS_PRISMA_MANAGEMENT_API_SECRET)
-
+	@echo PRISMA_MANAGEMENT_API_SECRET: $$(AWS_PRISMA_MANAGEMENT_API_SECRET)
 
 # ===========================================================================
 # Retrieves the Prisma secret for the AWS deployed service
@@ -361,26 +359,21 @@ aws-prisma-service-secret: env-ENVIRONMENT_NAME aws-env-banner
 	 echo PRISMA_SERVICE_API_SECRET_ARN: $(AWS_PRISMA_SERVICE_API_SECRET_ARN)								&& \
 	 echo PRISMA_SERVICE_API_SECRET: $(AWS_PRISMA_SERVICE_API_SECRET)
 
-
-
 # ===========================================================================
 # Gets a token for connecting to the AWS Prisma API
 # ===========================================================================
 aws-prisma-token: aws-env-banner
 	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
 	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
-	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																			&& \
-	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																												&& \
+	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
+	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
 	 printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
-	 printf "%s\n"   "= Getting Prisma API token from $${AWS_PRISMA_ENDPOINT}"		   																&& \
+	 printf "%s\n"   "= Getting Prisma API token for $${PRISMA_ENDPOINT}"		  		 															&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 printf "%s\n" "PRISMA_MANAGEMENT_API_SECRET: $${AWS_PRISMA_MANAGEMENT_API_SECRET}"															&& \
-	 printf "%s\n" "PRISMA_SECRET: $${AWS_PRISMA_SECRET}"																														&& \
-	 cd prisma && prisma token
-
+	 cd prisma && yarn token
 
 # ===========================================================================
 # Runs Prisma deploy against the AWS environment
@@ -388,18 +381,15 @@ aws-prisma-token: aws-env-banner
 aws-prisma-deploy: aws-env-banner
 	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
 	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
-	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																			&& \
-	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																												&& \
+	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
+	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
 	 printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
-	 printf "%s\n"   "= Deploying Prisma datamodel to $${AWS_PRISMA_ENDPOINT}"		   																&& \
+	 printf "%s\n"   "= Deploying Prisma datamodel to ${AWS_PRISMA_ENDPOINT}"		   															&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 printf "%s\n" "PRISMA_MANAGEMENT_API_SECRET: $${AWS_PRISMA_MANAGEMENT_API_SECRET}"															&& \
-	 printf "%s\n" "PRISMA_SECRET: $${AWS_PRISMA_SECRET}"																														&& \
-	 cd prisma && prisma deploy
-
+	 cd prisma && yarn deploy
 
 # ===========================================================================
 # Runs Prisma seed against the AWS environment
@@ -407,17 +397,14 @@ aws-prisma-deploy: aws-env-banner
 aws-prisma-reseed: aws-env-banner
 	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
 	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
-	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																			&& \
-	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																												&& \
+	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
+	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
-	 printf "%s\n"   "= Seeding $${PRISMA_ENDPOINT}"		   																											&& \
+	 printf "%s\n"   "= Seeding ${PRISMA_ENDPOINT}"			   																											&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 printf "%s\n" "PRISMA_MANAGEMENT_API_SECRET: $${AWS_PRISMA_MANAGEMENT_API_SECRET}"															&& \
-	 printf "%s\n" "PRISMA_SECRET: $${AWS_PRISMA_SECRET}"																														&& \
-	 cd prisma && prisma reset --force && prisma seed
-
+	 cd prisma && yarn reseed
 
 # =================================================================
 # Force an update of the Prisma service in AWS
@@ -426,8 +413,9 @@ AWS_PRISMA_SERVICE_ARN_EXPORT := $(APPLICATION_NAME)-$(ENVIRONMENT_NAME)-PrismaS
 AWS_PRISMA_SERVICE_ARN := $$(aws cloudformation list-exports --query 'Exports[?Name==`$(AWS_PRISMA_SERVICE_ARN_EXPORT)`].Value' --output text)
 
 aws-prisma-update-service: aws-env-banner
-	@export PRISMA_SERVICE_ARN=$(AWS_PRISMA_SERVICE_ARN) && \
-	 echo PRISMA_SERVICE_ARN: $${PRISMA_SERVICE_ARN} && \
+	@echo PRISMA_SERVICE_ARN: ${AWS_PRISMA_SERVICE_ARN} 																																										&& \
+	 export PRISMA_SERVICE_ARN=$(AWS_PRISMA_SERVICE_ARN) 																																										&& \
+	 echo PRISMA_SERVICE_ARN: $${PRISMA_SERVICE_ARN} 																																												&& \
 	 aws ecs update-service --cluster $(APPLICATION_NAME)-$(ENVIRONMENT_NAME) --service "$${AWS_PRISMA_SERVICE_ARN}" --force-new-deployment
 
 # =================================================================
@@ -442,5 +430,5 @@ aws-apollo-update-service: aws-env-banner
 	 printf "%s\n"   "= Updating the Apollo service"													   																&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)"																																												&& \
-	 export APOLLO_SERVICE_ARN=$(AWS_APOLLO_SERVICE_ARN) 																														&& \
-	 aws ecs update-service --cluster $(APPLICATION_NAME)-$(ENVIRONMENT_NAME) --service "$${AWS_APOLLO_SERVICE_ARN}" --force-new-deployment
+	 export APOLLO_SERVICE_ARN=$(AWS_APOLLO_SERVICE_ARN) 																												&& \
+	 aws ecs update-service --cluster $(APPLICATION_NAME)-$(ENVIRONMENT_NAME) --service "$${APOLLO_SERVICE_ARN}" --force-new-deployment
