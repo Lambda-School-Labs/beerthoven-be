@@ -77,7 +77,6 @@ enum Role {
   GUEST
 }
 
-
 type Ticket {
   id: ID! @id
   person: Person @relation(link: INLINE)
