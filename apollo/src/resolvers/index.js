@@ -13,6 +13,6 @@ const resolvers = {
   Query,
   Mutation,
   User,
-};
+}; 
 
 module.exports = resolvers;
