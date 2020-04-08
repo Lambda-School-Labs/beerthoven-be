@@ -111,13 +111,12 @@ apollo-push: env-APOLLO_CONTAINER_IMAGE apollo-build
 	 cd apollo && docker push $${APOLLO_CONTAINER_IMAGE}
 
 apollo-token: env-APOLLO_TOKEN_ENDPOINT env-APOLLO_CLIENT_ID env-APOLLO_CLIENT_SECRET
-	@export $$(cat .env | xargs)																																								  && 			\
-	 printf "$(OK_COLOR)"																																												&& 			\
+	@printf "$(OK_COLOR)"																																												&& 			\
 	 printf "\n%s\n" "======================================================================================"		&& 			\
 	 printf "%s\n"   "= Grabbing token from: $${APOLLO_TOKEN_ENDPOINT}"																					&& 			\
 	 printf "%s\n"   "======================================================================================"		&& 			\
 	 printf "$(NO_COLOR)"																																												&& 			\
-	 curl -s 																																																 					  \
+	 curl -v 																																																 					  \
 		    --url $${APOLLO_TOKEN_ENDPOINT}																																 								\
 				--header 'accept: application/json'																																			 			\
 		    --header 'content-type: application/x-www-form-urlencoded' 																							 			\
