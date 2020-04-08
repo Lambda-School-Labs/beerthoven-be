@@ -15,8 +15,10 @@ FROM node:12-alpine
 WORKDIR /app
 
 COPY --from=deps /app/node_modules ./node_modules/
-COPY ./src/ ./src
+
 COPY ./schema/ ./schema
+COPY ./src/ ./src
+
 
 CMD [ "node", "src/index.js" ]
 EXPOSE 8000
