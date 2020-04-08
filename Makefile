@@ -41,6 +41,7 @@ init: clean
 	 printf "%s\n"   "======================================================================================"		&& \
 	 printf "$(NO_COLOR)"
 	 cd apollo && yarn install
+	 cd prisma && yarn install
 
 docker-clean: clean
 	@printf "$(OK_COLOR)"																																												&& \
