@@ -1,5 +1,3 @@
-
-
 # import Query.event from "generated/prisma.graphql"
 # import Query.events from "generated/prisma.graphql"
 # import Query.vendor from "generated/prisma.graphql"
@@ -26,8 +24,6 @@
 # import Query.talent from "generated/prisma.graphql"
 # import Query.talents from "generated/prisma.graphql"
 
-
-
 # import Mutation.createUser from "generated/prisma.graphql"
 # import Mutation.deleteUser from "generated/prisma.graphql"
 # import Mutation.updateUser from "generated/prisma.graphql"
@@ -47,5 +43,17 @@
 # import Mutation.updateTalent from "generated/prisma.graphql"
 # import Mutation.deleteTalent from "generated/prisma.graphql"
 
+type Mutation {
+  login(data: LoginUserInput!): AuthPayload!
+}
 
+#  Added for authorization
+type AuthPayload {
+  token: String!
+  user: User!
+}
 
+input LoginUserInput {
+  email: String!
+  password: String!
+}

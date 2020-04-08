@@ -9,6 +9,17 @@
  */
 
 const Mutation = {
+
+  async login(_, args, { prisma }, info) {
+    const user = await prisma.user({
+      where: {
+        email: args.data.email
+      }
+    })
+    console.log(user)
+  },
+
+
   async createUser(parent, args, { prisma }, info) {
     if (!args.data.username) throw new Error('User name required!');
 
