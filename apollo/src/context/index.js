@@ -25,6 +25,7 @@ const logger = winston.createLogger({
 });
 console.log('Logging level: %s', logger.level);
 
+
 /**
  * The context passed to the resolvers
  * @typedef {Object} ApolloContext
