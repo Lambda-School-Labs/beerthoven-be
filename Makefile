@@ -362,8 +362,8 @@ aws-prisma-service-secret: env-ENVIRONMENT_NAME aws-env-banner
 # Gets a token for connecting to the AWS Prisma API
 # ===========================================================================
 aws-prisma-token: aws-env-banner
-	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
-	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
+	@export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
+	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
 	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
 	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
@@ -378,8 +378,8 @@ aws-prisma-token: aws-env-banner
 # Runs Prisma deploy against the AWS environment
 # ===========================================================================
 aws-prisma-deploy: aws-env-banner
-	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
-	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
+	@export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
+	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
 	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
 	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
@@ -394,8 +394,8 @@ aws-prisma-deploy: aws-env-banner
 # Runs Prisma seed against the AWS environment
 # ===========================================================================
 aws-prisma-reseed: aws-env-banner
-	@export $$(cat aws.$(APPLICATION_NAME) | xargs)																															&& \
-	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | xargs)																					&& \
+	@export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
+	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
 	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
 	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
 	 printf "$(OK_COLOR)"																																												&& \
