@@ -116,7 +116,7 @@ apollo-token: env-APOLLO_TOKEN_ENDPOINT env-APOLLO_CLIENT_ID env-APOLLO_CLIENT_S
 	 printf "%s\n"   "= Grabbing token from: $${APOLLO_TOKEN_ENDPOINT}"																					&& 			\
 	 printf "%s\n"   "======================================================================================"		&& 			\
 	 printf "$(NO_COLOR)"																																												&& 			\
-	 curl -v 																																																 					  \
+	 curl -s 																																																 					  \
 		    --url $${APOLLO_TOKEN_ENDPOINT}																																 								\
 				--header 'accept: application/json'																																			 			\
 		    --header 'content-type: application/x-www-form-urlencoded' 																							 			\
