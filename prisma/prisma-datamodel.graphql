@@ -63,7 +63,7 @@ type Person {
 type User {
   id: ID! @id
   date_created: DateTime! @createdAt
-  email: String!
+  email: String
   person: Person @relation(link: INLINE) # made it not required to test
   role: Role!
   #@default(value: GUEST)
@@ -89,7 +89,7 @@ type Donation {
 
 type Volunteer {
   id: ID! @id
-  email: String!
+  email: String
   person: Person @relation(link: INLINE)
   # made it not required to test
   event: [Event]

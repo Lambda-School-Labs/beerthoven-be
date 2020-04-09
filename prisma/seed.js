@@ -73,9 +73,8 @@ async function main() {
 
     await prisma.createPerson({
       first_name: faker.name.firstName(),
-      username: faker.internet.userName(),
-      last_name: faker.name.lastName(),
       email: faker.internet.email(),
+      last_name: faker.name.lastName(),      
       phone: faker.phone.phoneNumber(),
       address: faker.address.streetAddress(),
       address2: faker.address.secondaryAddress(),
@@ -94,7 +93,7 @@ async function main() {
     await prisma.createVolunteer({});
 
     await prisma.createUser({
-      username: faker.internet.userName(),
+      email: faker.internet.email(),
       role: Role.shuffleRoles()
     });
 
