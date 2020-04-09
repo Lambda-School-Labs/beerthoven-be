@@ -13,14 +13,13 @@ const Mutation = {
   async login(_, args, { prisma }, info) {
     const user = await prisma.user({
       where: {
-        email: args.data.email
+        username: args.data.usernam
       }
     })
     console.log(user)
   },
 
-
-  async createUser(parent, args, { prisma }, info) {
+  async createUser(_, args, { prisma }, info) {
     if (!args.data.username) throw new Error('User name required!');
 
     const usernameTaken = await prisma.$exists.user({username: args.data.username});
@@ -30,7 +29,7 @@ const Mutation = {
     return prisma.createUser(args.data, info); 
   },
 
-  async deleteUser(parent, args, { prisma }, info) {
+  async deleteUser(_, args, { prisma }, info) {
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
     if (!findUser) throw new Error('No user with that id...');
