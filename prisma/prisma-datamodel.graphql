@@ -19,7 +19,7 @@ type Event {
   food_served: Boolean
   vendor: [Vendor] # made it not required to test
   talent: [Talent] @relation(link: TABLE) # made it not required to test
-  volunteer: [Volunteer] 
+  volunteer: [Volunteer]
   setup_costs: Int
   talent_costs: Int
   opening_time: Int
@@ -39,34 +39,33 @@ type Vendor {
   company_name: String!
   email: String!
   vendor_type: String!
-  event: [Event] 
+  event: [Event]
 }
 
 type Person {
   id: ID! @id
-  user: User
-  username: String!
+  email: String!
   first_name: String!
   last_name: String!
-  email: String!
   phone: String
   address: String
   address2: String
   city: String
   state: String
   zip: String
-  ticket: [Ticket] 
-  donation: [Donation] 
-  volunteer: [Volunteer] 
+  method: String
+  ticket: [Ticket]
+  donation: [Donation]
+  volunteer: [Volunteer]
   date_created: DateTime! @createdAt
 }
 
 type User {
   id: ID! @id
   date_created: DateTime! @createdAt
-  username: String!
+  email: String!
   person: Person @relation(link: INLINE) # made it not required to test
-  role: Role! 
+  role: Role!
   #@default(value: GUEST)
 }
 
@@ -90,9 +89,10 @@ type Donation {
 
 type Volunteer {
   id: ID! @id
+  email: String!
   person: Person @relation(link: INLINE)
   # made it not required to test
-  event: [Event] 
+  event: [Event]
 }
 
 type Talent {
@@ -101,7 +101,7 @@ type Talent {
   performance_type: String!
   address: String!
   email: String!
-  event: [Event]# made it not required to test
+  event: [Event] # made it not required to test
   website: String
   min_payment: Int
   hourly_rate: Int
@@ -132,4 +132,3 @@ type Talent {
   number_of_special_outlets_required: Int
   willing_to_meet_prior_to_show: Boolean
 }
-
