@@ -37,7 +37,7 @@ const typeDefs = gql(importSchema('schema/schema.graphql'));
     context,
     cors: {
       origin: '*',
-      credentials: true
+      credentials: false
     },
     formatError: err => {
       // Don't give the specific errors to the client.

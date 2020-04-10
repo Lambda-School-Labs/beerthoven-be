@@ -64,9 +64,8 @@ type User {
   id: ID! @id
   date_created: DateTime! @createdAt
   email: String
-  person: Person @relation(link: INLINE) # made it not required to test
-  role: Role!
-  #@default(value: GUEST)
+  person: Person @relation(link: INLINE) # made it not required to testA
+  role: Role @default(value: GUEST)
 }
 
 enum Role {

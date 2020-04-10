@@ -17,9 +17,10 @@ const Query = {
   },
 
   async user(parent, args, { prisma }, info) {
-    console.log(args.where.id)
     const findUser = await prisma.$exists.user({ id: args.where.id });
+
     if (!findUser) throw new Error('User with that id does not exist...');
+    
     return prisma.user({ id: args.where.id }, info)
   },
 

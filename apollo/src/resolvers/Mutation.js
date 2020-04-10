@@ -22,9 +22,9 @@ const Mutation = {
   async createUser(_, args, { prisma }, info) {
     if (!args.data.email) throw new Error('Email name required!');
 
-    const usernameTaken = await prisma.$exists.user({username: args.data.email});
+    const emailTaken = await prisma.$exists.user({email: args.data.email});
 
-    if (usernameTaken) throw new Error('Username taken');
+    if (emailTaken) throw new Error('email taken');
 
     return prisma.createUser(args.data, info); 
   },
@@ -88,12 +88,12 @@ const Mutation = {
   },
 
   async updateEvent(parent, args, { prisma }, info) {
-    console.log(args.where.id)
     if (!args.where.id) throw new Error('Enter event ID...');
 
     const findEvent = await prisma.$exists.event({ id: args.where.id })
 
     if (!findEvent) throw new Error('Event not found');
+    // add event required function later
 
     return prisma.updateEvent({
       where: {
