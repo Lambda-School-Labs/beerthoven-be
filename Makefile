@@ -82,6 +82,14 @@ local-prisma-deploy: env-PRISMA_ENDPOINT env-PRISMA_SECRET env-PRISMA_MANAGEMENT
 	 printf "$(NO_COLOR)"
 	 cd prisma && yarn install && yarn deploy
 
+local-prisma-deploy-force: env-PRISMA_ENDPOINT env-PRISMA_SECRET env-PRISMA_MANAGEMENT_API_SECRET
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Forcing deployment of Prisma schema"																										&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
+	 cd prisma && yarn install && yarn deploy --force
+
 local-prisma-reseed: env-PRISMA_ENDPOINT env-PRISMA_SECRET
 	@printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
@@ -380,7 +388,7 @@ aws-prisma-token: aws-env-banner
 	 printf "%s\n"   "= Getting Prisma API token for $${PRISMA_ENDPOINT}"		  		 															&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 cd prisma && yarn token
+	 cd prisma && yarn install && yarn token
 
 # ===========================================================================
 # Runs Prisma deploy against the AWS environment
@@ -396,7 +404,23 @@ aws-prisma-deploy: aws-env-banner
 	 printf "%s\n"   "= Deploying Prisma datamodel to ${AWS_PRISMA_ENDPOINT}"		   															&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 cd prisma && yarn deploy
+	 cd prisma && yarn install && yarn deploy
+
+# ===========================================================================
+# Runs Prisma deploy against the AWS environment with --force argument
+# ===========================================================================
+aws-prisma-deploy-force: aws-env-banner
+	@export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
+	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
+	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
+	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
+	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
+	 printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Forcing Prisma datamodel deploy to ${AWS_PRISMA_ENDPOINT}"		   												&& \
+	 printf "%s"     "======================================================================================"		&& \
+	 printf "$(NO_COLOR)\n"																																											&& \
+	 cd prisma && yarn install && yarn deploy --force
 
 # ===========================================================================
 # Runs Prisma seed against the AWS environment
@@ -406,12 +430,13 @@ aws-prisma-reseed: aws-env-banner
 	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
 	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
 	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
+	 export PRISMA_ENDPOINT="https://prisma.$${ApplicationDomainNamespace}"																			&& \
 	 printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
-	 printf "%s\n"   "= Seeding ${PRISMA_ENDPOINT}"			   																											&& \
+	 printf "%s\n"   "= Seeding ${AWS_PRISMA_ENDPOINT}"			   																											&& \
 	 printf "%s"     "======================================================================================"		&& \
 	 printf "$(NO_COLOR)\n"																																											&& \
-	 cd prisma && yarn reseed
+	 cd prisma && yarn install && yarn reseed
 
 # =================================================================
 # Force an update of the Prisma service in AWS
