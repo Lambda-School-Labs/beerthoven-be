@@ -72,6 +72,7 @@ enum Role {
   ADMIN
   VOLUNTEER
   GUEST
+  # PERFORMER defer to future release 
 }
 
 type Ticket {
