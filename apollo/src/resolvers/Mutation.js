@@ -20,9 +20,9 @@ const Mutation = {
   },
 
   async createUser(_, args, { prisma }, info) {
-    if (!args.data.username) throw new Error('User name required!');
+    if (!args.data.email) throw new Error('Email name required!');
 
-    const usernameTaken = await prisma.$exists.user({username: args.data.username});
+    const usernameTaken = await prisma.$exists.user({username: args.data.email});
 
     if (usernameTaken) throw new Error('Username taken');
 
