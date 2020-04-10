@@ -61,34 +61,42 @@ local-up: apollo-build
 	 printf "$(NO_COLOR)"
 	 docker-compose up --abort-on-container-exit
 
+
 # =================================================================
 # = Prisma targets ================================================
 # =================================================================
 
-prisma-generate: env-PRISMA_ENDPOINT env-PRISMA_SECRET
-	@echo															&& \
-	 echo Generating Prisma schema		&& \
+prisma-generate:
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Generating Prisma schema"																																&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
 	 cd prisma && yarn install && yarn generate
 
-local-prisma-deploy: env-PRISMA_MANAGEMENT_API_SECRET
-	 echo															&& \
-	 echo Deploying Prisma schema			&& \
-	 cd prisma && yarn install 				&& \
-	 yarn deploy
+local-prisma-deploy: env-PRISMA_ENDPOINT env-PRISMA_SECRET env-PRISMA_MANAGEMENT_API_SECRET
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Deploying Prisma schema"																																&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
+	 cd prisma && yarn install && yarn deploy
 
-local-prisma-reseed:
-	@echo															&& \
-	 echo Deploying Prisma schema			&& \
-	 cd prisma 												&& \
-	 yarn install											&& \
-	 yarn reset											  && \
-	 yarn seed
+local-prisma-reseed: env-PRISMA_ENDPOINT env-PRISMA_SECRET
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Reeseeding Prisma deployment"																														&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
+	 cd prisma && yarn install && yarn reseed
 
-local-prisma-token:
-	@echo																&& \
-	 echo Generating Prisma token				&& \
-	 cd prisma && yarn install --silent && \
-	 yarn token
+local-prisma-token: env-PRISMA_ENDPOINT env-PRISMA_SECRET
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Generating Prisma token"																																&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
+	 cd prisma && yarn install && yarn token
 
 
 # =================================================================
@@ -204,7 +212,6 @@ aws-env-banner: env-APPLICATION_NAME env-ENVIRONMENT_NAME
 	@printf "%s\n" "======================================================================================"
 	@printf "$(NO_COLOR)"
 	@( read -p "Are you sure you want to continue? [y/N]: " sure && case "$$sure" in [yY]) true;; *) false;; esac )
-
 
 # ===========================================================================
 # Provision DNS resources for the environment
@@ -363,7 +370,7 @@ aws-prisma-service-secret: env-ENVIRONMENT_NAME aws-env-banner
 # Gets a token for connecting to the AWS Prisma API
 # ===========================================================================
 aws-prisma-token: aws-env-banner
-	@export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
+	export $$(cat aws.$(APPLICATION_NAME) | grep -v "#" | xargs)																								&& \
 	 export $$(cat aws.$(APPLICATION_NAME).$(ENVIRONMENT_NAME) | grep -v "#" | xargs)														&& \
 	 export PRISMA_MANAGEMENT_API_SECRET="$(AWS_PRISMA_MANAGEMENT_API_SECRET)"																	&& \
 	 export PRISMA_SECRET="$(AWS_PRISMA_SERVICE_API_SECRET)" 																										&& \
