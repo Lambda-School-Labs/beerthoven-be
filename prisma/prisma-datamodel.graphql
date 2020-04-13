@@ -74,10 +74,19 @@ enum Role {
   GUEST
 }
 
+enum Ticket_Type {
+  GA_DOOR
+  GA_ONLINE
+  SEASON_PASS
+  VENUE_MEMBER
+  STUDENT
+}
+
 type Ticket {
   id: ID! @id
   person: Person @relation(link: INLINE)
-  event: Event 
+  event: Event
+  type: Ticket_Type @default(value: GA_ONLINE)
 }
 
 type Donation {
