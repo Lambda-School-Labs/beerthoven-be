@@ -3,8 +3,7 @@
 // Apollo dependencies
 const { importSchema } = require("graphql-import");
 const { ApolloServer, gql, UserInputError, ApolloError } = require("apollo-server");
-// const ConstraintDirective = require('graphql-constraint-directive');
-// const { makeExecutableSchema } = require('graphql-tools')
+
 
 const PORT = process.env.PORT || 8000;
 
