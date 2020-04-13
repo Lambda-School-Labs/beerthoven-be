@@ -44,7 +44,7 @@ const typeDefs = gql(importSchema("schema/schema.graphql"));
     typeDefs,
     context,
     cors: {
-      origin: "https://apollo.beerthoven.dev",
+      origin: "*",
       credentials: true
     },
     formatError: err => {
