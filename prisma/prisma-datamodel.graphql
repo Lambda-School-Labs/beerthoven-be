@@ -17,8 +17,8 @@ type Event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [Vendor] # made it not required to test
-  talent: [Talent] @relation(link: TABLE) # made it not required to test
+  vendor: [Vendor] 
+  talent: [Talent] @relation(link: TABLE) 
   volunteer: [Volunteer]
   setup_costs: Int
   talent_costs: Int
@@ -64,7 +64,7 @@ type User {
   id: ID! @id
   date_created: DateTime! @createdAt
   email: String
-  person: Person @relation(link: INLINE) # made it not required to testA
+  person: Person @relation(link: INLINE) A
   role: Role @default(value: GUEST)
 }
 
@@ -75,10 +75,19 @@ enum Role {
   # PERFORMER defer to future release 
 }
 
+enum Ticket_Type {
+  GA_DOOR
+  GA_ONLINE
+  SEASON_PASS
+  VENUE_MEMBER
+  STUDENT
+}
+
 type Ticket {
   id: ID! @id
   person: Person @relation(link: INLINE)
-  event: Event # made it not required to test
+  event: Event
+  type: Ticket_Type @default(value: GA_ONLINE)
 }
 
 type Donation {
@@ -91,7 +100,7 @@ type Volunteer {
   id: ID! @id
   email: String
   person: Person @relation(link: INLINE)
-  # made it not required to test
+  
   event: [Event]
 }
 
@@ -101,7 +110,7 @@ type Talent {
   performance_type: String!
   address: String!
   email: String!
-  event: [Event] # made it not required to test
+  event: [Event] 
   website: String
   min_payment: Int
   hourly_rate: Int
