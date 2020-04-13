@@ -1,8 +1,14 @@
 type Event {
   id: ID! @id
+  date_created: DateTime! @createdAt
+  eventbriteEventId: Int
   event_name: String!
   event_type: String!
-  event_address: String!
+  address: String!
+  address2: String
+  city: String!
+  state: String!
+  zip: String!
   event_description: String!
   max_capacity: Int
   min_capacity: Int
@@ -17,9 +23,9 @@ type Event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [Vendor] 
-  talent: [Talent] @relation(link: TABLE) 
-  volunteer: [Volunteer]
+  vendor: [Vendor] # made it not required to test
+  talent: [Talent] @relation(link: TABLE) # made it not required to test
+  volunteers: [Volunteer]
   setup_costs: Int
   talent_costs: Int
   opening_time: Int
@@ -32,6 +38,38 @@ type Event {
   parking_max_capacity: Int
   sales_gross: Int
   sales_net: Int
+}
+
+type Venue {
+  Id: ID! @id
+  date_created: DateTime! @createdAt
+  name: String!
+  venue_type: String!
+  address: String!
+  city: String!
+  state: String!
+  zip: String!
+  max_capacity: Int
+  min_income: Float
+  deposit_amount: Float
+  smoking_allowed: Boolean!
+  under21_allowed: Boolean!
+  under18_allowed: Boolean!
+  wheelchair_accessible: Boolean!
+  alcohol_beer_provided: Boolean!
+  alcohol_wine_provided: Boolean!
+  alcohol_spirits_provided: Boolean!
+  food_served: Boolean!
+  vendors: [Vendor!]!
+  max_decibel: Float
+  opening_time: String
+  closing_time: String
+  dance_floor_size: String
+  indoor_venue: Boolean!
+  outdoor_venue: Boolean!
+  parking_lot_available: Boolean!
+  parking_max_capacity: Int
+  tabc_certified: Boolean!
 }
 
 type Vendor {
@@ -63,13 +101,14 @@ type Person {
 type User {
   id: ID! @id
   date_created: DateTime! @createdAt
-  email: String
-  person: Person @relation(link: INLINE) A
+  email: String! @constraint(format: "email", maxLength: 255)
+  person: Person @relation(link: INLINE)
   role: Role @default(value: GUEST)
 }
 
 enum Role {
   ADMIN
+  PERFORMER
   VOLUNTEER
   GUEST
   # PERFORMER defer to future release 
@@ -100,7 +139,6 @@ type Volunteer {
   id: ID! @id
   email: String
   person: Person @relation(link: INLINE)
-  
   event: [Event]
 }
 
@@ -110,7 +148,7 @@ type Talent {
   performance_type: String!
   address: String!
   email: String!
-  event: [Event] 
+  event: [Event]
   website: String
   min_payment: Int
   hourly_rate: Int
