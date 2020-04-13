@@ -120,10 +120,10 @@ const Query = {
     return prisma.volunteer({ id: args.where.id }, info);
   },
 
-  //  Venue
-  async venues(_, args, { prisma }, info) {
-    return prisma.venues(null, info);
+    async venues(_, args, { prisma }, info) {
+      return prisma.venues(null, info);
   }
 };
+
 
 module.exports = Query;

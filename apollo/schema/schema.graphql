@@ -8,7 +8,9 @@
 # import Query.person from "generated/prisma.graphql"
 # import Query.persons from "generated/prisma.graphql"
 
-# import Query.Venue from "generated/prisma.graphql"
+# import Query.venue from "generated/prisma.graphql"
+# import Query.venues from "generated/prisma.graphql"
+
 # import Query.ticket from "generated/prisma.graphql"
 # import Query.tickets from "generated/prisma.graphql"
 
@@ -45,6 +47,7 @@
 # import Mutation.createTalent from "generated/prisma.graphql"
 # import Mutation.updateTalent from "generated/prisma.graphql"
 # import Mutation.deleteTalent from "generated/prisma.graphql"
+# import Mutation.createEvent from "generated/prisma.graphql"
 
 type Mutation {
   login(data: LoginUserInput!): AuthPayload!
