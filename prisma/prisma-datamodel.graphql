@@ -17,8 +17,8 @@ type Event {
   alcohol_wine_served: Boolean
   alcohol_spirits_served: Boolean
   food_served: Boolean
-  vendor: [Vendor] 
-  talent: [Talent] @relation(link: TABLE) 
+  vendor: [Vendor]
+  talent: [Talent] @relation(link: TABLE)
   volunteer: [Volunteer]
   setup_costs: Int
   talent_costs: Int
@@ -63,13 +63,14 @@ type Person {
 type User {
   id: ID! @id
   date_created: DateTime! @createdAt
-  email: String
-  person: Person @relation(link: INLINE) A
+  email: String! @constraint(format: "email", maxLength: 255)
+  person: Person @relation(link: INLINE)
   role: Role @default(value: GUEST)
 }
 
 enum Role {
   ADMIN
+  PERFORMER
   VOLUNTEER
   GUEST
 }
@@ -99,7 +100,7 @@ type Volunteer {
   id: ID! @id
   email: String
   person: Person @relation(link: INLINE)
-  
+
   event: [Event]
 }
 
@@ -109,7 +110,7 @@ type Talent {
   performance_type: String!
   address: String!
   email: String!
-  event: [Event] 
+  event: [Event]
   website: String
   min_payment: Int
   hourly_rate: Int
