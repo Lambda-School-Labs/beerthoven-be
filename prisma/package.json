@@ -9,7 +9,7 @@
   },
   "scripts": {
     "generate": "prisma generate",
-    "deploy": "prisma deploy",
+    "deploy": "prisma reset --force && prisma deploy",
     "token": "prisma token",
     "reset": "prisma reset --force",
     "seed": "prisma seed",

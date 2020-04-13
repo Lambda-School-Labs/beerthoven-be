@@ -59,9 +59,9 @@ const jwtVerifyOptions = {
 };
 
 // Verify the environment variable was set
-if (!('JWKS_URI' in process.env)) {
-  throw new Error("Required environment variable 'JWKS_URI' is not set");
-}
+// if (!('JWKS_URI' in process.env)) {
+//   throw new Error("Required environment variable 'JWKS_URI' is not set");
+// }
 
 // Creates a JWKS Client
 const { JWKS_URI } = process.env;

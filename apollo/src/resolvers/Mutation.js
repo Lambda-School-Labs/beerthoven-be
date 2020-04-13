@@ -94,6 +94,27 @@ const Mutation = {
     });
   },
 
+  async createVenue(parent, args, { prisma }, info) {
+    if (!args.data.name) throw new Error('Venue name required');
+
+    return prisma.createVenue(args.data, info);
+  },
+
+  async updateVenue(parent, args, { prisma }, info) {
+    if(!args.where.id) throw new Error("Venue ID required...");
+
+    const findVenue = await prisma.$exists.event({ id: args.where.id });
+
+    if(!findVenue) throw new Error("Venue not found");
+
+    return prisma.updateVenue({ 
+      where: {
+        id: args.where.id
+      }, 
+        data: args.data
+  })
+  },
+
   async createEvent(parent, args, { prisma }, info) {
     if (!args.data.event_name) throw new Error("Event name required!");
 
@@ -184,6 +205,8 @@ const Mutation = {
 
     return prisma.deleteTalent({ id: args.where.id });
   }
+
+  
 
   //  Should we create a ticket table considering tickets come from a 3rd party source (eventbrite)?
   //  Should we create a donation table considering they come from a 3rd party source (square)?
