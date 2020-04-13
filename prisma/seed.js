@@ -14,11 +14,11 @@ const performanceType = [
   "Symphony"
 ];
 
-const Role = ['ADMIN', 'VOLUNTEER', 'GUEST'];
+const Role = ["ADMIN", "VOLUNTEER", "GUEST", "PERFORMER"];
 
 Array.prototype.shuffleRoles = function() {
-  return this[Math.floor(Math.random() * this.length)]
-}
+  return this[Math.floor(Math.random() * this.length)];
+};
 
 Array.prototype.randomPerformance = function() {
   return this[Math.floor(Math.random() * this.length)];
@@ -36,7 +36,10 @@ async function main() {
     await prisma.createEvent({
       event_name: faker.company.companyName(),
       event_type: faker.company.companySuffix(),
-      event_address: faker.address.streetAddress(),
+      address: faker.address.streetAddress(),
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode(),
       event_description: faker.company.catchPhraseNoun(),
       max_capacity: getRandomInt(1, 900),
       min_capacity: getRandomInt(1, 40),
@@ -57,7 +60,7 @@ async function main() {
       opening_time: faker.random.number(),
       closing_time: faker.random.number(),
       event_date: faker.random.number(),
-      tabc_certified: faker.random.boolean(),
+      // tabc_certified: faker.random.boolean(),
       indoor_event: faker.random.boolean(),
       outdoor_vent: faker.random.boolean(),
       parking_lot_available: faker.random.boolean(),
@@ -65,6 +68,37 @@ async function main() {
       sales_gross: getRandomInt(2000, 9000),
       sales_net: getRandomInt(1000, 8000)
     });
+
+    await prisma.createVenue({
+      name: faker.company.companyName(),
+      venue_type: faker.company.catchPhraseDescriptor(),
+      address: faker.address.streetAddress(),
+      city: faker.address.city(),
+      state: faker.address.stateAbbr(),
+      zip: faker.address.zipCode(),
+      max_capacity: getRandomInt(100, 300),
+      min_income: getRandomInt(100000, 800000),
+      deposit_amount: getRandomInt(1000, 3000),
+      smoking_allowed: faker.random.boolean(),
+      under21_allowed: faker.random.boolean(),
+      under18_allowed: faker.random.boolean(),
+      wheelchair_accessible: faker.random.boolean(),
+      alcohol_beer_provided: faker.random.boolean(),
+      alcohol_wine_provided: faker.random.boolean(),
+      alcohol_spirits_provided: faker.random.boolean(),
+      food_served: faker.random.boolean(),
+      // vendors: [Vendor],
+      max_decibel: getRandomInt(50, 100),
+      opening_time: getRandomInt(5, 7).toString(),
+      closing_time: getRandomInt(9, 12).toString(),
+      dance_floor_size: getRandomInt(200, 450).toString(),
+      indoor_venue: faker.random.boolean(),
+      outdoor_venue: faker.random.boolean(),
+      parking_lot_available: faker.random.boolean(),
+      parking_max_capacity: getRandomInt(40, 120),
+      tabc_certified: faker.random.boolean()
+    });
+
     await prisma.createVendor({
       company_name: faker.company.companyName(),
       email: faker.internet.email(),
@@ -74,7 +108,7 @@ async function main() {
     await prisma.createPerson({
       first_name: faker.name.firstName(),
       email: faker.internet.email(),
-      last_name: faker.name.lastName(),      
+      last_name: faker.name.lastName(),
       phone: faker.phone.phoneNumber(),
       address: faker.address.streetAddress(),
       address2: faker.address.secondaryAddress(),

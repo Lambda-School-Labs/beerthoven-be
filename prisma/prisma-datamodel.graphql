@@ -41,7 +41,7 @@ type Event {
 }
 
 type Venue {
-  Id: ID! @id
+  id: ID! @id
   date_created: DateTime! @createdAt
   name: String!
   venue_type: String!
@@ -60,7 +60,7 @@ type Venue {
   alcohol_wine_provided: Boolean!
   alcohol_spirits_provided: Boolean!
   food_served: Boolean!
-  vendors: [Vendor!]!
+  vendors: [Vendor] # not required for testing purposes
   max_decibel: Float
   opening_time: String
   closing_time: String
@@ -91,7 +91,6 @@ type Person {
   city: String
   state: String
   zip: String
-  method: String
   ticket: [Ticket]
   donation: [Donation]
   volunteer: [Volunteer]
@@ -101,7 +100,7 @@ type Person {
 type User {
   id: ID! @id
   date_created: DateTime! @createdAt
-  email: String! @constraint(format: "email", maxLength: 255)
+  email: String!
   person: Person @relation(link: INLINE)
   role: Role @default(value: GUEST)
 }
