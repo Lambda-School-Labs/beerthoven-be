@@ -33,7 +33,7 @@ type Event {
   event_date: Int
   tabc_certified: Boolean
   indoor_event: Boolean
-  outdoor_vent: Boolean
+  outdoor_event: Boolean
   parking_lot_available: Boolean
   parking_max_capacity: Int
   sales_gross: Int
