@@ -1,4 +1,3 @@
-
 // import ApolloServer and important pieces for creating test server
 const {
   typeDefs,
@@ -7,4 +6,6 @@ const {
 } = require('../apollo/src/index.js');
 
 // import Prisma to connect to test database
-const {Prisma} = require('../prisma/') // it should be testing prisma dir.
+const {
+  Prisma
+} = require('../prisma/') // it should be testing prisma dir.

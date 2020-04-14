@@ -13,25 +13,25 @@ const Mutation = {
   async login(_, args, { prisma }, info) {
     const user = await prisma.user({
       where: {
-        username: args.data.username
-      }
+        username: args.data.username,
+      },
     });
     console.log(user);
   },
 
   //  User
-  
   async createUser(_, args, { prisma }, info) {
-    if (!args.data.email) throw new Error("Email name required!");
+    if (!args.data.email) throw new Error('Email name required!');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");
-    
+
+    if (!isValidEmail) throw new Error('email not in proper format');
+
     const emailTaken = await prisma.$exists.user({ email: args.data.email });
 
-    if (emailTaken) throw new Error("email taken");
+    if (emailTaken) throw new Error('email taken');
 
     return prisma.createUser(args.data, info);
   },
@@ -39,7 +39,7 @@ const Mutation = {
   async deleteUser(_, args, { prisma }, info) {
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
-    if (!findUser) throw new Error("No user with that id...");
+    if (!findUser) throw new Error('No user with that id...');
 
     return prisma.deleteUser({ id: args.where.id });
   },
@@ -47,38 +47,37 @@ const Mutation = {
   async updateUser(parent, args, { prisma }, info) {
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
-    if (!findUser) throw new Error("No user with that id...");
+    if (!findUser) throw new Error('No user with that id...');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");    
+    if (!isValidEmail) throw new Error('email not in proper format');
 
     return prisma.updateUser(
       {
         where: {
-          id: args.where.id
+          id: args.where.id,
         },
-        data: args.data
+        data: args.data,
       },
-      info
+      info,
     );
   },
 
   //  Person
-
   async createPerson(parent, args, { prisma }, info) {
     const emailTaken = await prisma.$exists.person({ email: args.data.email });
 
-    if (emailTaken) throw new Error("Email taken");
+    if (emailTaken) throw new Error('Email taken');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");
+    if (!isValidEmail) throw new Error('email not in proper format');
 
     if (args.data.zip < 10000 || args.data.zip > 99999)
-      throw new Error("Enter valid zip");
+      throw new Error('Enter valid zip');
 
     return prisma.createPerson(args.data, info);
   },
@@ -86,63 +85,64 @@ const Mutation = {
   async deletePerson(parent, args, { prisma }, info) {
     const findPerson = await prisma.$exists.person({ id: args.where.id });
 
-    if (!findPerson) throw new Error("Person not found...");
+    if (!findPerson) throw new Error('Person not found...');
 
     return prisma.deletePerson({ id: args.where.id });
   },
 
   async updatePerson(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("ID is required!");
+    if (!args.where.id) throw new Error('ID is required!');
 
     const findPerson = await prisma.$exists.person({ id: args.where.id });
 
-    if (!findPerson) throw new Error("Person not found...");
+    if (!findPerson) throw new Error('Person not found...');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");
+    if (!isValidEmail) throw new Error('email not in proper format');
 
     return prisma.updatePerson({
       where: {
-        id: args.where.id
+        id: args.where.id,
       },
-      data: args.data
+      data: args.data,
     });
   },
 
   //  Venue
   async createVenue(parent, args, { prisma }, info) {
     if (!args.data.name) throw new Error('Venue name required');
+
     return prisma.createVenue(args.data, info);
   },
 
   async deleteVenue(parent, args, { prisma }, info) {
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
-    
-    if (!findVenue) throw new Error("Venue not found...");  
+
+    if (!findVenue) throw new Error('Venue not found...');
 
     return prisma.deleteVenue({ id: args.where.id });
   },
 
   async updateVenue(parent, args, { prisma }, info) {
-    if(!args.where.id) throw new Error("Venue ID required...");  
+    if (!args.where.id) throw new Error('Venue ID required...');
 
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
 
-    if(!findVenue) throw new Error("Venue not found");
+    if (!findVenue) throw new Error('Venue not found');
 
-    return prisma.updateVenue({ 
+    return prisma.updateVenue({
       where: {
-        id: args.where.id
-      }, 
-        data: args.data
-  })
+        id: args.where.id,
+      },
+      data: args.data,
+    });
   },
 
   //Event
   async createEvent(parent, args, { prisma }, info) {
-    if (!args.data.event_name) throw new Error("Event name required!");
+    if (!args.data.event_name) throw new Error('Event name required!');
 
     return prisma.createEvent(args.data, info);
   },
@@ -150,107 +150,112 @@ const Mutation = {
   async deleteEvent(parent, args, { prisma }, info) {
     const findEvent = await prisma.$exists.event({ id: args.where.id });
 
-    if (!findEvent) throw new Error("Event not found...");
+    if (!findEvent) throw new Error('Event not found...');
 
     return prisma.deleteEvent({ id: args.where.id });
   },
 
   async updateEvent(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("Enter event ID...");
+    if (!args.where.id) throw new Error('Enter event ID...');
 
     const findEvent = await prisma.$exists.event({ id: args.where.id });
 
-    if (!findEvent) throw new Error("Event not found");
+    if (!findEvent) throw new Error('Event not found');
     // add event required function later
     return prisma.updateEvent({
       where: {
-        id: args.where.id
+        id: args.where.id,
       },
-      data: args.data
+      data: args.data,
     });
   },
 
   //  Vendor
   async createVendor(parent, args, { prisma }, info) {
     const emailTaken = await prisma.$exists.vendor({ email: args.data.email });
-    if (emailTaken) throw new Error("Email taken");
+
+    if (emailTaken) throw new Error('Email taken');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");
+    if (!isValidEmail) throw new Error('email not in proper format');
     return prisma.createVendor(args.data, info);
   },
 
   async updateVendor(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("ID required...");
+    if (!args.where.id) throw new Error('ID required...');
 
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
 
-    if (!findVendor) throw new Error("Vendor not found...");
+    if (!findVendor) throw new Error('Vendor not found...');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
 
-    if (!isValidEmail) throw new Error("email not in proper format");
-    
+    if (!isValidEmail) throw new Error('email not in proper format');
+
     return prisma.updateVendor({
       where: {
-        id: args.where.id
+        id: args.where.id,
       },
-      data: args.data
+      data: args.data,
     });
   },
 
   async deleteVendor(parent, args, { prisma }, info) {
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
-    if (!findVendor) throw new Error("Vendor with ID not found...");
+
+    if (!findVendor) throw new Error('Vendor with ID not found...');
+
     return prisma.deleteVendor({ id: args.where.id });
   },
 
   //  Talent
-
   async createTalent(parent, args, { prisma }, info) {
     if (
       !args.data.talent_name ||
       !args.data.performance_type ||
       !args.data.address
     )
-      throw new Error("Required fields name, type, address!");
+      throw new Error('Required fields name, type, address!');
 
     const emailTaken = await prisma.$exists.talent({ email: args.data.email });
-    if (emailTaken) throw new Error("Email taken");
+
+    if (emailTaken) throw new Error('Email taken');
+
     return prisma.createTalent(args.data);
   },
 
   async updateTalent(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("Talent ID is required!");
+    if (!args.where.id) throw new Error('Talent ID is required!');
+
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
-    if (!findTalent) throw new Error("Talent not found...");
+
+    if (!findTalent) throw new Error('Talent not found...');
 
     const isValidEmail = emailExpression.test(
-      String(args.data.email).toLowerCase()
+      String(args.data.email).toLowerCase(),
     );
-    if (!isValidEmail) throw new Error("email not in proper format");
+
+    if (!isValidEmail) throw new Error('email not in proper format');
 
     return prisma.updateTalent({
       where: {
-        id: args.where.id
+        id: args.where.id,
       },
-      data: args.data
+      data: args.data,
     });
   },
 
   async deleteTalent(parent, args, { prisma }, info) {
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
 
-    if (!findTalent) throw new Error("Talent with ID not found...");
+    if (!findTalent) throw new Error('Talent with ID not found...');
 
     return prisma.deleteTalent({ id: args.where.id });
-  }
-
-  
+  },
 
   //  Should we create a ticket table considering tickets come from a 3rd party source (eventbrite)?
   //  Should we create a donation table considering they come from a 3rd party source (square)?

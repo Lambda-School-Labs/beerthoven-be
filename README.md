@@ -8,7 +8,7 @@ Our mission is to offer enriching musical experiences through down-to-earth mean
 
 * [Contributors](#Contributors)
 * Project Overview
-* Build and Installation
+* [Build and Installation](#Build-and-Installation)
 * Endpoints
 * Available Scripts
 * Testings
