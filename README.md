@@ -45,3 +45,22 @@ This backend build on top of [Prismatopia](https://github.com/Lambda-School-Labs
 ## Build and Installation
 
 ## Environment Variables
+
+In order for the app to function correctly, the user must set up their own environment variables.
+
+Create a .env file that includes the following:
+
+APOLLO_CONTAINER_IMAGE
+APOLLO_JWKS_URI
+APOLLO_JWT_ISSUER
+APOLLO_TOKEN_ENDPOINT
+APOLLO_CLIENT_ID
+APOLLO_CLIENT_SECRET
+APOLLO_TEST_USERNAME
+APOLLO_TEST_PASSWORD
+PRISMA_ENDPOINT=http://localhost:7000
+PRISMA_SECRET
+PRISMA_MANAGEMENT_API_SECRET=somesecret
+LOG_LEVEL=debug
+APPLICATION_NAME=beerthoven
+ENVIRONMENT_NAME=production
