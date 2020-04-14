@@ -65,7 +65,7 @@ Our server relies on Okta and another Prisma/PostgreSQL deployment to function c
 
 Once Okta and Prisma is configured:
 
-* Follow [these directions](#Prismatopia:)
+* Follow [these directions](#Prismatopia:) for prismatopia commands
 
 * visit your endpoint URL to interact with your server through the GraphQL Playground
 
@@ -101,7 +101,12 @@ The GraphQL API consists of a single endpoint. In addition to the built-in docum
 | `user(...)`  | authenticated user     | Get user's information and stuff |
 | `events(...)` | get list of events | Returns a list of beerthoven events |
 
-
+## Mutations
+| Query Name  | Access Control |  Description |
+| ------------- | ------------- | ------------ |
+| `createUser (...)` | Okta service | Creates a newly registered user. |
+| `createEvent (...)` | authenticated users | Create beerthoven event |
+| `createPerson (...)` | Okta service | Creates a newly registered person |
 
 
 
@@ -115,6 +120,12 @@ The GraphQL API consists of a single endpoint. In addition to the built-in docum
 6. Push to AWS
 7. Repeat
 
+## Testing
+Our test runner is Jest for unit and integration tests.
+For integration testing, we simulate queries and mutations on the server through the apollo-server-testing library's createTestClient() function.
+
+
+## Available Scripts
 Makefile
 First, it is very important to note that there is a Makefile in the root directly that is intended to provide all of the controls that you'll need for both local development and AWS operations.
 
