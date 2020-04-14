@@ -2,7 +2,7 @@
 
 // Apollo dependencies
 const { importSchema } = require("graphql-import");
-const { ApolloServer, gql } = require("apollo-server");
+const { ApolloServer, gql, UserInputError, ApolloError } = require("apollo-server");
 
 const PORT = process.env.PORT || 8000;
 
@@ -43,6 +43,7 @@ const typeDefs = gql(importSchema("schema/schema.graphql"));
     resolvers,
     typeDefs,
     context,
+    
     cors: {
       origin: "*",
       credentials: true

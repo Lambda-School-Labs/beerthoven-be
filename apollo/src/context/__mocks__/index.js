@@ -26,6 +26,9 @@ mockContext.user = 'Mock';
 
 // Mock the createProfile function to control it for tests
 mockPrismaClient.createProfile = jest.fn();
+
+// expect(mockPrismaClient.createProfile).toHaveBeenCalled();
+
 mockPrismaClient.createEvent = jest.fn();
 mockPrismaClient.createActivity = jest.fn();
 mockPrismaClient.updateProfile = jest.fn();
