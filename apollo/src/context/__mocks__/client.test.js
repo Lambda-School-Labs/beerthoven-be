@@ -1,7 +1,7 @@
 const mockContext = require('./index');
 
 
-console.log(mockContext.updateEvent)
+// console.log(mockContext.updateEvent)
 
 function sum(a, b) {
   return a + b;

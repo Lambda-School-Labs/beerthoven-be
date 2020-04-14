@@ -7,7 +7,7 @@
  * @returns { import('../generated/prisma-client').UserPromise }
  */
 
-//  const { ApolloServer, UserInputError, ApolloError } = require('apollo-server');
+const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Mutation = {
   async login(_, args, { prisma }, info) {
@@ -21,8 +21,6 @@ const Mutation = {
 
   async createUser(_, args, { prisma }, info) {
     if (!args.data.email) throw new Error("Email name required!");
-
-    const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
     const isValidEmail = emailExpression.test(
       String(args.data.email).toLowerCase()
@@ -49,6 +47,11 @@ const Mutation = {
 
     if (!findUser) throw new Error("No user with that id...");
 
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
+
     return prisma.updateUser(
       {
         where: {
@@ -64,6 +67,11 @@ const Mutation = {
     const emailTaken = await prisma.$exists.person({ email: args.data.email });
 
     if (emailTaken) throw new Error("Email taken");
+
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
 
     if (args.data.zip < 10000 || args.data.zip > 99999)
       throw new Error("Enter valid zip");
@@ -85,6 +93,11 @@ const Mutation = {
     const findPerson = await prisma.$exists.person({ id: args.where.id });
 
     if (!findPerson) throw new Error("Person not found...");
+
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
 
     return prisma.updatePerson({
       where: {
@@ -142,6 +155,11 @@ const Mutation = {
 
     if (emailTaken) throw new Error("Email taken");
 
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
+
     return prisma.createVendor(args.data, info);
   },
 
@@ -151,6 +169,11 @@ const Mutation = {
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
 
     if (!findVendor) throw new Error("Vendor not found...");
+
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
 
     return prisma.updateVendor({
       where: {
@@ -189,6 +212,11 @@ const Mutation = {
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
 
     if (!findTalent) throw new Error("Talent not found...");
+
+    const isValidEmail = emailExpression.test(
+      String(args.data.email).toLowerCase()
+    );
+    if (!isValidEmail) throw new Error("email not in proper format");
 
     return prisma.updateTalent({
       where: {
