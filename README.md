@@ -11,7 +11,7 @@ Our mission is to offer enriching musical experiences through down-to-earth mean
 * [Build and Installation](#Build-and-Installation)
 * [Endpoints](#Endpoints)
 * [Available Scripts](#Available-Scripts)
-* [Testings](#Testings)
+* [Testing](#Testing)
 * [Contributing](#Contributing)
 
 
