@@ -39,7 +39,11 @@
 # import Mutation.updateVenue from "generated/prisma.graphql"
 # import Mutation.deleteVenue from "generated/prisma.graphql"
 
+# import Mutation.createEvent from "generated/prisma.graphql"
 # import Mutation.updateEvent from "generated/prisma.graphql"
+# import Mutation.deleteEvent from "generated/prisma.graphql"
+
+
 # import Mutation.createVendor from "generated/prisma.graphql"
 # import Mutation.updateVendor from "generated/prisma.graphql"
 # import Mutation.deleteVendor from "generated/prisma.graphql"
@@ -47,7 +51,6 @@
 # import Mutation.createTalent from "generated/prisma.graphql"
 # import Mutation.updateTalent from "generated/prisma.graphql"
 # import Mutation.deleteTalent from "generated/prisma.graphql"
-# import Mutation.createEvent from "generated/prisma.graphql"
 
 type Mutation {
   login(data: LoginUserInput!): AuthPayload!
@@ -63,4 +66,3 @@ input LoginUserInput {
   username: String!
   password: String!
 }
-

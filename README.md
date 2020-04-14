@@ -4,7 +4,7 @@
 
 # Beerthoven Back End
 
-Our mission is to offer enriching musical experiences through down-to-earth means. You can find the deployed project at [Beerthoven](https://master.dsj5o2cfzjzih.amplifyapp.com/).
+Our mission is to offer enriching musical experiences through down-to-earth means. You can find the deployed project at [Beerthoven](https://master.dsj5o2cfzjzih.amplifyapp.com).
 
 * [Contributors](#Contributors)
 * Project Overview
@@ -33,34 +33,168 @@ A Prisma Database ORM service defined in the /prisma/ directory. The prisma is r
 
 An Okta authentication application hosted on Okta with custom rules and forms defined in the /apollo/resolvers directory.
 
-This backend build on top of [Prismatopia](https://github.com/Lambda-School-Labs/prismatopia) an API stack combining a bunch of technologies: Apollo Server, Prisma, OAuth, OpenID Connect, JWT, Postgres, Docker, AWS and more!
+This backend build is on top of [Prismatopia](https://github.com/Lambda-School-Labs/prismatopia) an API stack combining a bunch of technologies: Apollo Server, Prisma, OAuth, OpenID Connect, JWT, Postgres, Docker, AWS and more!
 
 ## Key Features
-
+* concert attendees
+* benefactors
+* ticket sales
+* merch sales
+* event inventory usage
+* event surveys
+* concert drink/food donations
+* event food/drinks/inventory 
+* concert venue and venue details
 
 ## Backend Framework
 
+We chose an Apollo GraphQL server over a RESTful API for the two reasons:
+
+Allow web and mobile clients to request the exact event details they have space to render. This prevents overfetching and increases performance on mobile.
+
+Allow the Beerthoven API to be seamless expanded to include integration of event data from external APIs in future releases
+
 ## Client repositories
 
+1. Web application at [React Front End Repository.](https://master.dsj5o2cfzjzih.amplifyapp.com)
+2. No IOS or Android versions.
+
 ## Build and Installation
+
+Our server relies on Okta and another Prisma/PostgreSQL deployment to function correctly. If you would like to get your own local Beerthoven server running, clone this repo and follow this guide here.
+
+Once Okta and Prisma is configured:
+
+* Follow [these directions](#Prismatopia:)
+
+* visit your endpoint URL to interact with your server through the GraphQL Playground
 
 ## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 Create a .env file that includes the following:
-
-APOLLO_CONTAINER_IMAGE
-APOLLO_JWKS_URI
-APOLLO_JWT_ISSUER
-APOLLO_TOKEN_ENDPOINT
-APOLLO_CLIENT_ID
-APOLLO_CLIENT_SECRET
-APOLLO_TEST_USERNAME
-APOLLO_TEST_PASSWORD
+```
+APOLLO_CONTAINER_IMAGE - lambdaschoollabs/your_repo_name
+APOLLO_JWKS_URI - Okta domain for your Okta application.
+APOLLO_JWT_ISSUER=<Okta domain for your Okta application.>
+APOLLO_TOKEN_ENDPOINT=<An OAuth endpoint for Apollo to use for validating tokens: e.,g. "https://dev-173777.okta.com/oauth2/default">
+APOLLO_CLIENT_ID=<Client ID from Okta>
+APOLLO_CLIENT_SECRET=<a secret for the prisma service to use: e.g. myfirstpassword>
+APOLLO_TEST_USERNAME=<username>
+APOLLO_TEST_PASSWORD=<password>
 PRISMA_ENDPOINT=http://localhost:7000
-PRISMA_SECRET
-PRISMA_MANAGEMENT_API_SECRET=somesecret
-LOG_LEVEL=debug
-APPLICATION_NAME=beerthoven
-ENVIRONMENT_NAME=production
+PRISMA_SECRET=<another secret>
+PRISMA_MANAGEMENT_API_SECRET=<somesecret>
+LOG_LEVEL=<debug or just info>
+APPLICATION_NAME=<Give your App name>
+ENVIRONMENT_NAME=<production>
+```
+
+## Endpoints
+The GraphQL API consists of a single endpoint. In addition to the built-in documentation available from the GraphQL playground, the following queries and mutations can be consumed to conduct CRUD operations on the Beerthoven database:
+
+## Queries:
+| Query Name  | Access Control |  Description |
+| ---------------- | ------------------- | --------------- |
+| `users (...)`     |  authenticated users      |  returns a list of users. |
+| `user(...)`  | authenticated user     | Get user's information and stuff |
+| `events(...)` | get list of events | Returns a list of beerthoven events |
+
+
+
+
+
+### Prismatopia:
+
+1. Create your .env file to feed environment variables to Prismatopia
+2. Start the services via `make local-up`
+3. Develop and deploy your Prisma datamodel
+4. Develop and deploy your Apollo resolvers
+5. Go to 3 until done
+6. Push to AWS
+7. Repeat
+
+Makefile
+First, it is very important to note that there is a Makefile in the root directly that is intended to provide all of the controls that you'll need for both local development and AWS operations.
+
+make init
+This command will do some cleanup and will try to ensure that all required packages are in place. It's a good command to start with.
+
+make docker-clean
+This command will do some cleanup of your Docker environment, which can get messy and cluttered at times.
+
+make local-up
+This is a big one! It will use Docker Compose to bring up a local environment with a running Apollo Server, Prisma Server and Postgres Server.
+
+make prisma-generate
+Generates a Prisma client and GraphQL model from your Prisma data model for use in your Apollo resolvers.
+
+make local-prisma-deploy
+Deploys your Prisma data model to the locally running Prisma server.
+
+make local-prisma-reseed
+Resets and reseeds data into the locally running Prisma server.
+
+make local-prisma-token
+Grabs a token that you can use in the GraphQL Playground of your locally running Prisma server.
+
+make apollo-build
+Builds a fresh new Docker image from the contents of the apollo folder and stores it in your local Docker service.
+
+make apollo-push
+Builds a fresh new Docker image from the contents of the apollo folder and pushes it to Docker Hub.
+
+make apollo-token
+Grabs a token, using the OAUTH_TOKEN_ENDPOINT, TEST_OAUTH_CLIENT_ID and TEST_OAUTH_CLIENT_SECRET environment variables. Very handy to use in the Apollo GraphQL Playground.
+
+Detailed Local Development Workflow
+Certainly some steps were skipped earlier, so here are the details to how to work with Prismatopia locally:
+
+1) Install tools
+Docker
+Prisma CLI
+2) Create a domain on Okta
+TBDocumented
+
+3) Setup your environment variables
+Create an .env file in the root directory as described above
+
+Start Prismatopia
+make local-up
+
+Prisma, Apollo and Postgres should be running now, check the output for the endpoints:
+
+...
+apollo_1    | Running at address :: on port 8000
+...
+prisma_1    | Server running on :7000
+...
+Check the web interfaces
+You should now be able to hit Prisma in the browser:
+
+Prisma GraphQL Playground: http://localhost:7000/
+Prisma Admin: http://localhost:7000/_admin
+You should also be able to hit Apollo in the browser:
+
+Apollo GraphQL Playground: http://localhost:8000/
+Sweet! Now, you need to deploy something to Prisma, which starts out empty.
+
+Deploy data model to Prisma
+make local-prisma-deploy
+
+Play with Prisma
+Generate a token: make local-prisma-deploy
+Open the Prisma Admin: http://localhost:7000/_admin
+Add the token (TBD)
+See the data
+Open the Prisma GraphQL Playground: http://localhost:7000/
+Add the token (TBD)
+See the data
+Hooray! Your Prisma service is talking to Postgres!
+
+Play with Apollo
+Generate a token: make apollo-token
+Open the Apollo GraphQL Playground: http://localhost:8000/
+Add the token (TBD)
+See the data
