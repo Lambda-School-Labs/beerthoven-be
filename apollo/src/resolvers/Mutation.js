@@ -129,7 +129,7 @@ const Mutation = {
     if(!args.where.id) throw new Error("Venue ID required...");  
 
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
-    
+
     if(!findVenue) throw new Error("Venue not found");
 
     return prisma.updateVenue({ 
@@ -143,18 +143,23 @@ const Mutation = {
   //Event
   async createEvent(parent, args, { prisma }, info) {
     if (!args.data.event_name) throw new Error("Event name required!");
+
     return prisma.createEvent(args.data, info);
   },
 
   async deleteEvent(parent, args, { prisma }, info) {
     const findEvent = await prisma.$exists.event({ id: args.where.id });
+
     if (!findEvent) throw new Error("Event not found...");
+
     return prisma.deleteEvent({ id: args.where.id });
   },
 
   async updateEvent(parent, args, { prisma }, info) {
     if (!args.where.id) throw new Error("Enter event ID...");
+
     const findEvent = await prisma.$exists.event({ id: args.where.id });
+
     if (!findEvent) throw new Error("Event not found");
     // add event required function later
     return prisma.updateEvent({
@@ -181,11 +186,15 @@ const Mutation = {
     if (!args.where.id) throw new Error("ID required...");
 
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
+
     if (!findVendor) throw new Error("Vendor not found...");
+
     const isValidEmail = emailExpression.test(
       String(args.data.email).toLowerCase()
     );
+
     if (!isValidEmail) throw new Error("email not in proper format");
+    
     return prisma.updateVendor({
       where: {
         id: args.where.id

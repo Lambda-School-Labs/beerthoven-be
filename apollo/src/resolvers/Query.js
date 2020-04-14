@@ -121,14 +121,14 @@ const Query = {
     return prisma.volunteer({ id: args.where.id }, info);
   },
 
-    async venues(_, args, { prisma }, info) {
-      return prisma.venues(null, info);
+  async venues(_, args, { prisma }, info) {
+    return prisma.venues(null, info);
   },
 
   async venue(_, args, { prisma }, info) {
     if (!args.where.id) throw new Error("Please enter an id");
 
-    const findVenue = await prisma.$exists.venuee({ id: args.where.id });
+    const findVenue = await prisma.$exists.venue({ id: args.where.id });
 
     if (!findVenue) throw new Error("Venue not found...");
 
@@ -139,3 +139,4 @@ const Query = {
 
 
 module.exports = Query;
+

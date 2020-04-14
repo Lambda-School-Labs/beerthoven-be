@@ -32,7 +32,7 @@ function getRandomInt(min, max) {
 
 async function main() {
   // Generate a bunch of random users
-  for (var i = 0; i < 20; i++) {
+  for (var i = 0; i < 500; i++) {
     await prisma.createEvent({
       event_name: faker.company.companyName(),
       event_type: faker.company.companySuffix(),
