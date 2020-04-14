@@ -114,7 +114,7 @@ The GraphQL API consists of a single endpoint. In addition to the built-in docum
 
 1. Create your .env file to feed environment variables to Prismatopia
 2. Start the services via `make local-up`
-3. Develop and deploy your Prisma datamodel
+3. Develop and deploy your Prisma data-model
 4. Develop and deploy your Apollo resolvers
 5. Go to 3 until done
 6. Push to AWS

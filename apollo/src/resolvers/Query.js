@@ -35,6 +35,7 @@ const Query = {
 
     return prisma.person({ id: args.where.id });
   },
+
   async events(parent, args, { prisma }, info) {
     return prisma.events(null, info);
   },
@@ -122,7 +123,18 @@ const Query = {
 
     async venues(_, args, { prisma }, info) {
       return prisma.venues(null, info);
+  },
+
+  async venue(_, args, { prisma }, info) {
+    if (!args.where.id) throw new Error("Please enter an id");
+
+    const findVenue = await prisma.$exists.venuee({ id: args.where.id });
+
+    if (!findVenue) throw new Error("Venue not found...");
+
+    return prisma.venue({ id: args.where.id }, info);
   }
+
 };
 
 

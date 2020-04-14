@@ -121,14 +121,17 @@ const Mutation = {
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
     
     if (!findVenue) throw new Error("Venue not found...");  
+
     return prisma.deleteVenue({ id: args.where.id });
   },
 
   async updateVenue(parent, args, { prisma }, info) {
     if(!args.where.id) throw new Error("Venue ID required...");  
 
-    const findVenue = await prisma.$exists.event({ id: args.where.id });
+    const findVenue = await prisma.$exists.venue({ id: args.where.id });
+    
     if(!findVenue) throw new Error("Venue not found");
+
     return prisma.updateVenue({ 
       where: {
         id: args.where.id
