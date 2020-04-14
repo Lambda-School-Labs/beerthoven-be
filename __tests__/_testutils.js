@@ -7,4 +7,4 @@ const {
 } = require('../apollo/src/index.js');
 
 // import Prisma to connect to test database
-const {Prisma} = require('../prisma/')
+const {Prisma} = require('../prisma/') // it should be testing prisma dir.
