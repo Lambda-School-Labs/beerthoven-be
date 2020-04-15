@@ -62,7 +62,7 @@ async function main() {
       event_date: faker.date.future(),
       tabc_certified: faker.random.boolean(),
       indoor_event: faker.random.boolean(),
-      outdoor_vent: faker.random.boolean(),
+      outdoor_event: faker.random.boolean(),
       parking_lot_available: faker.random.boolean(),
       parking_max_capacity: getRandomInt(10, 250),
       sales_gross: getRandomInt(2000, 9000),
