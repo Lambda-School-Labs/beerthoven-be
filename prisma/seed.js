@@ -32,7 +32,7 @@ function getRandomInt(min, max) {
 
 async function main() {
   // Generate a bunch of random users
-  for (var i = 0; i < 500; i++) {
+  for (var i = 0; i < 50; i++) {
     await prisma.createEvent({
       event_name: faker.company.companyName(),
       event_type: faker.company.companySuffix(),
@@ -57,10 +57,10 @@ async function main() {
       // vendor: [Vendor],
       setup_costs: getRandomInt(1, 2000),
       talent_costs: faker.random.number(),
-      opening_time: faker.random.number(),
-      closing_time: faker.random.number(),
-      event_date: faker.random.number(),
-      // tabc_certified: faker.random.boolean(),
+      opening_time: getRandomInt(5, 7).toString(),
+      closing_time: getRandomInt(9, 12).toString(),
+      event_date: faker.date.future(),
+      tabc_certified: faker.random.boolean(),
       indoor_event: faker.random.boolean(),
       outdoor_vent: faker.random.boolean(),
       parking_lot_available: faker.random.boolean(),

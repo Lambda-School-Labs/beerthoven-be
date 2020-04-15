@@ -28,9 +28,9 @@ type Event {
   volunteers: [Volunteer]
   setup_costs: Int
   talent_costs: Int
-  opening_time: Int
-  closing_time: Int
-  event_date: Int
+  opening_time: String
+  closing_time: String
+  event_date: DateTime! # should not be Int
   tabc_certified: Boolean
   indoor_event: Boolean
   outdoor_event: Boolean
