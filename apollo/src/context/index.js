@@ -80,7 +80,7 @@ const jwksClient = JwksClient({
 const getKey = async header => {
   // Promisify the callback based function: https://github.com/auth0/node-jsonwebtoken/issues/111
   const getSigningKey = promisify(jwksClient.getSigningKey);
-
+// console.log(getSigningKey)
   // Get the signing key
   let key;
   try {
