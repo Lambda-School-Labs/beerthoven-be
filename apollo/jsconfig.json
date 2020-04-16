@@ -2,8 +2,12 @@
   "compilerOptions": {
     "baseUrl": "./",
     "module": "commonjs",
+    "moduleResolution": "node",
     "target": "es6",
-    "checkJs": true
+    "checkJs": true,
+    "noEmit": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules"],
