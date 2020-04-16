@@ -31,7 +31,7 @@ const checkEnvironment = () => {
 };
 
 const resolvers = require("./resolvers");
-const context = require("./context");
+const contextInitializer = require("./context");
 
 const typeDefs = gql(importSchema("schema/schema.graphql"));
 
@@ -42,7 +42,7 @@ const typeDefs = gql(importSchema("schema/schema.graphql"));
   const server = new ApolloServer({
     resolvers,
     typeDefs,
-    context,
+    context: contextInitializer,
     cors: {
       origin: "*",
       credentials: true
