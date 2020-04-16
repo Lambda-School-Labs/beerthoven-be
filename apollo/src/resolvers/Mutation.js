@@ -21,6 +21,8 @@ const Mutation = {
 
   //  User
   async createUser(_, args, { prisma }, info) {
+    args.data.email = args.data.email.toLowerCase();
+
     if (!args.data.email) throw new Error('Email name required!');
 
     const isValidEmail = emailExpression.test(
@@ -29,12 +31,13 @@ const Mutation = {
 
     if (!isValidEmail) throw new Error('email not in proper format');
 
-    const emailTaken = await prisma.$exists.user({ email: args.data.email });
+    const emailTaken = await prisma.$exists.user({ email: args.data.email.toLowerCase() });
 
     if (emailTaken) throw new Error('email taken');
 
     return prisma.createUser(args.data, info);
   },
+
 
   async deleteUser(_, args, { prisma }, info) {
     const findUser = await prisma.$exists.user({ id: args.where.id });
@@ -45,6 +48,8 @@ const Mutation = {
   },
 
   async updateUser(parent, args, { prisma }, info) {
+    args.data.email = args.data.email.toLowerCase();
+    
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
     if (!findUser) throw new Error('No user with that id...');

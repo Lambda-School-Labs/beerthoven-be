@@ -32,7 +32,7 @@ function getRandomInt(min, max) {
 
 async function main() {
   // Generate a bunch of random users
-  for (var i = 0; i < 500; i++) {
+  for (var i = 0; i < 50; i++) {
     await prisma.createEvent({
       event_name: faker.company.companyName(),
       event_type: faker.company.companySuffix(),
@@ -57,12 +57,12 @@ async function main() {
       // vendor: [Vendor],
       setup_costs: getRandomInt(1, 2000),
       talent_costs: faker.random.number(),
-      opening_time: faker.random.number(),
-      closing_time: faker.random.number(),
-      event_date: faker.random.number(),
-      // tabc_certified: faker.random.boolean(),
+      opening_time: getRandomInt(5, 7).toString(),
+      closing_time: getRandomInt(9, 12).toString(),
+      event_date: faker.date.future(),
+      tabc_certified: faker.random.boolean(),
       indoor_event: faker.random.boolean(),
-      outdoor_vent: faker.random.boolean(),
+      outdoor_event: faker.random.boolean(),
       parking_lot_available: faker.random.boolean(),
       parking_max_capacity: getRandomInt(10, 250),
       sales_gross: getRandomInt(2000, 9000),
@@ -101,13 +101,13 @@ async function main() {
 
     await prisma.createVendor({
       company_name: faker.company.companyName(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       vendor_type: faker.company.companySuffix()
     });
 
     await prisma.createPerson({
       first_name: faker.name.firstName(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       last_name: faker.name.lastName(),
       phone: faker.phone.phoneNumber(),
       address: faker.address.streetAddress(),
@@ -127,7 +127,7 @@ async function main() {
     await prisma.createVolunteer({});
 
     await prisma.createUser({
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       role: Role.shuffleRoles()
     });
 
@@ -135,7 +135,7 @@ async function main() {
       talent_name: faker.name.findName(),
       performance_type: performanceType.randomPerformance(),
       address: faker.address.streetAddress(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       // event: [Event]! @relation(name: "EventTalent")
       website: faker.internet.domainName(),
       min_payment: getRandomInt(50, 500),

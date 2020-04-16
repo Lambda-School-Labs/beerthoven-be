@@ -12,7 +12,10 @@
  */
 
 const Query = {
-  async users(parent, args, { prisma }, info) {
+  async users(parent, args, { prisma, user, authorizationHeader, tokenHeader }, info) {
+    console.log(user.id) // test@example.com from JWT
+    // console.log(authorizationHeader.replace(/^Bearer\s/, '')) // gets the full token
+    console.log(tokenHeader.kid) // token id 
     return prisma.users(null, info);
   },
 
