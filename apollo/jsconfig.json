@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "module": "commonjs",
+    "target": "es6",
+    "checkJs": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"],
+  "types": ["jest"],
+  "typeRoots": ["node_modules/@types"]
+}
