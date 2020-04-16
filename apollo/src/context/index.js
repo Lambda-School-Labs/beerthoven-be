@@ -39,13 +39,13 @@ console.log('Logging level: %s', logger.level);
  * @param {string} id
  * @param {string} name
  * @param {string} email
- * @param {[string]} groups
+ * @param {string} role
  */
-function User(id, name, email, groups) {
+function User(id, email, role) {
   this.id = id;
-  this.name = name;
+  // this.name = name;
   this.email = email;
-  this.groups = groups;
+  this.role = role;
 }
 
 /**
@@ -92,7 +92,7 @@ const getKey = async header => {
       JWKS_URI,
     );
     throw new AuthenticationError('Not authorized');
-  }
+  } 
 
   logger.debug("Retrieved public key from (%O) with kid (%O): %O", JWKS_URI, header.kid, key)
 
@@ -108,8 +108,10 @@ const getKey = async header => {
  * @return { Promise<ApolloContext> } context
  */
 const context = async ({ req }) => {
+  // console.log(req.header('Authorization'))
   // Grab the 'Authorization' token from the header
   const authorizationHeader = req.header('Authorization');
+
   if (
     typeof authorizationHeader !== 'string' ||
     authorizationHeader === 'null' ||
@@ -153,10 +155,13 @@ const context = async ({ req }) => {
   logger.debug('Creating User using decoded JWT: %O', decodedJWT);
   const user = new User(
     (id = decodedJWT.sub),
-    (name = decodedJWT.name),
-    (email = decodedJWT.email)
+    // (name = decodedJWT.name),
+    (email = decodedJWT.email),
+    (role = decodedJWT.role)
   );
-
+// console.log("id as email", user.id)
+// console.log("email", user.email)
+// console.log("role", user.role)
   // Don't let anyone past this point if they aren't authenticated
   if (typeof user === 'undefined' || user == null) {
     logger.error('Unable to authenticate user: %O', req.header);
@@ -166,7 +171,7 @@ const context = async ({ req }) => {
   logger.debug('Current user: %O', user);
 
   // Pack the user, Prisma client and Winston logger into the context
-  return { user, prisma, logger };
+  return { user, prisma, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
 };
 
 module.exports = context;

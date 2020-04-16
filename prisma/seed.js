@@ -101,13 +101,13 @@ async function main() {
 
     await prisma.createVendor({
       company_name: faker.company.companyName(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       vendor_type: faker.company.companySuffix()
     });
 
     await prisma.createPerson({
       first_name: faker.name.firstName(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       last_name: faker.name.lastName(),
       phone: faker.phone.phoneNumber(),
       address: faker.address.streetAddress(),
@@ -127,7 +127,7 @@ async function main() {
     await prisma.createVolunteer({});
 
     await prisma.createUser({
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       role: Role.shuffleRoles()
     });
 
@@ -135,7 +135,7 @@ async function main() {
       talent_name: faker.name.findName(),
       performance_type: performanceType.randomPerformance(),
       address: faker.address.streetAddress(),
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       // event: [Event]! @relation(name: "EventTalent")
       website: faker.internet.domainName(),
       min_payment: getRandomInt(50, 500),
