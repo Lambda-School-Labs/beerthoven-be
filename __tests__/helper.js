@@ -5,7 +5,7 @@ import resolvers from( '../apollo/src/resolvers/Mutation')
 
 const { query, mutate } = createTestClient(server);
 
-//  mocks: true  `ignores resolvers and mocks them out with random data`
+//  mocks: true  `ignores resolvers and mocks them out with random data to allow for testing`
 
 const createTestServer = ctx => {
   const server = new ApolloServer({

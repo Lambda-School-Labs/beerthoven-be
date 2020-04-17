@@ -36,10 +36,10 @@ console.log("Logging level: %s", logger.level);
  */
 exports.User = function User(id, name, email, groups) {
   this.id = id;
-  this.name = name;
+  // this.name = name;
   this.email = email;
-  this.groups = groups;
-};
+  this.role = role;
+}
 
 /**
  * The context passed to the resolvers
@@ -77,7 +77,7 @@ const getKey = async (header) => {
 
   // Promisify the callback based function: https://github.com/auth0/node-jsonwebtoken/issues/111
   const getSigningKey = promisify(jwksClient.getSigningKey);
-
+// console.log(getSigningKey)
   // Get the signing key
   let key;
   try {
@@ -163,10 +163,13 @@ exports.default = async ({ req, _res }) => {
   logger.debug("Creating User using decoded JWT: %O", decodedJWT);
   const user = new User(
     (id = decodedJWT.sub),
-    (name = decodedJWT.name),
-    (email = decodedJWT.email)
+    // (name = decodedJWT.name),
+    (email = decodedJWT.email),
+    (role = decodedJWT.role)
   );
-
+// console.log("id as email", user.id)
+// console.log("email", user.email)
+// console.log("role", user.role)
   // Don't let anyone past this point if they aren't authenticated
   if (typeof user === "undefined" || user == null) {
     logger.error("Unable to authenticate user: %O", req.header);
@@ -176,5 +179,5 @@ exports.default = async ({ req, _res }) => {
   logger.debug("Current user: %O", user);
 
   // Pack the user, Prisma client and Winston logger into the context
-  return new exports.Context(user, prisma, logger);
+  return { user, prisma, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
 };

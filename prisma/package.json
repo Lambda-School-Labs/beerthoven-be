@@ -5,11 +5,11 @@
   "author": "Lambda Labs",
   "license": "MIT",
   "engines": {
-    "node": ">=10"
+    "node": ">=12"
   },
   "scripts": {
     "generate": "prisma generate",
-    "deploy": "prisma deploy",
+    "deploy": "prisma reset --force && prisma deploy",
     "token": "prisma token",
     "reset": "prisma reset --force",
     "seed": "prisma seed",

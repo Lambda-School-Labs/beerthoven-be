@@ -8,6 +8,9 @@
 # import Query.person from "generated/prisma.graphql"
 # import Query.persons from "generated/prisma.graphql"
 
+# import Query.venue from "generated/prisma.graphql"
+# import Query.venues from "generated/prisma.graphql"
+
 # import Query.ticket from "generated/prisma.graphql"
 # import Query.tickets from "generated/prisma.graphql"
 
@@ -32,8 +35,14 @@
 # import Mutation.deletePerson from "generated/prisma.graphql"
 # import Mutation.updatePerson from "generated/prisma.graphql"
 
+# import Mutation.createVenue from "generated/prisma.graphql"
+# import Mutation.updateVenue from "generated/prisma.graphql"
+# import Mutation.deleteVenue from "generated/prisma.graphql"
+
 # import Mutation.createEvent from "generated/prisma.graphql"
 # import Mutation.updateEvent from "generated/prisma.graphql"
+# import Mutation.deleteEvent from "generated/prisma.graphql"
+
 
 # import Mutation.createVendor from "generated/prisma.graphql"
 # import Mutation.updateVendor from "generated/prisma.graphql"
