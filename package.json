@@ -6,10 +6,11 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "cfn-lint": "^1.9.7",
-    "jest": "^25.3.0",
     "bufferutil": "^4.0.1",
     "canvas": "^2.6.1",
+    "cfn-lint": "^1.9.7",
+    "jest": "^25.3.0",
+    "json-stringify-safe": "^5.0.1",
     "utf-8-validate": "^5.0.2"
   },
   "devDependencies": {
