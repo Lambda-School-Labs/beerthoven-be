@@ -1,22 +1,20 @@
 // @ts-check
 
-/**
- * @param {{ where: import('../generated/prisma-client').UserWhereUniqueInput }} args
- * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
- * @returns { Promise }
- */
-/**
- * @param {{ where: import('../generated/prisma-client').UserWhereInput }} args
- * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
- * @returns { Promise }
- */
+  /**
+   * @param {*} _parent
+   * @param { [any] } args
+   * @param { import('../context').Context } context
+   * @param {*} _info
+   */
 
 const Query = {
   async users(parent, args, { prisma, user, authorizationHeader, tokenHeader }, info) {
     console.log(user.id) // test@example.com from JWT
     // console.log(authorizationHeader.replace(/^Bearer\s/, '')) // gets the full token
     console.log(tokenHeader.kid) // token id 
-    return prisma.users(null, info);
+    if (args) {
+      return prisma.users();
+    }
   },
 
   async user(parent, args, { prisma }, info) {
