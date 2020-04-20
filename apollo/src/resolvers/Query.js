@@ -61,8 +61,11 @@ const Query = {
 
   //  Talents
   async talents(parent, args, { prisma }, info) {
-    
-    return prisma.talents({ ...args });
+    try {
+      return prisma.talents({ ...args });
+    } catch (err) {
+      throw err
+    }
   },
 
   //  Talent
@@ -78,7 +81,11 @@ const Query = {
 
   // Vendor
   async vendors(parent, args, { prisma }, info) {
+    try {
     return prisma.vendors({ ...args });
+    } catch (err) {
+      throw err
+    }
   },
 
   async vendor(parent, args, { prisma }, info) {
@@ -93,7 +100,11 @@ const Query = {
 
   // Ticket
   async tickets(parent, args, { prisma }, info) {
+    try {
     return prisma.tickets({ ...args });
+    } catch (err) {
+      throw err;
+    }
   },
 
   async ticket(parent, args, { prisma }, info) {
@@ -107,8 +118,14 @@ const Query = {
 
   // Donation
   async donations(parent, args, { prisma }, info) {
+    try {
     return prisma.donations({ ...args });
+      
+    } catch (err) {
+      throw err;
+    }
   },
+
   async donation(parent, args, { prisma }, info) {
     if (!args.where.id) throw new Error('ID required to find that donation');
 
@@ -120,7 +137,11 @@ const Query = {
 
   // Volunteer
   async volunteers(parent, args, { prisma }, info) {
+    try {
     return prisma.volunteers({ ...args });
+    } catch (err) {
+      throw err;
+    }
   },
   
   async volunteer(_, args, { prisma }, info) {
@@ -134,7 +155,11 @@ const Query = {
   },
 
   async venues(_, args, { prisma }, info) {
+    try {
     return prisma.venues({ ...args });
+    } catch (err) {
+      throw err;
+    }
   },
 
   async venue(_, args, { prisma }, info) {
