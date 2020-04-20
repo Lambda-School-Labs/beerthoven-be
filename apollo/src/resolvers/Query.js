@@ -9,10 +9,11 @@
 
 
 const Query = {
-  async users(parent, args, { prisma, user, authorizationHeader, tokenHeader }, info) {
+  async users(parent, args, { prisma, user }, info) {
+    if (!user || !user.role.includes('admin')) throw new Error('Not authorized as admin');
+
     try {
       return prisma.users({ ...args });
-      
     } catch (err) {
       throw err;
     }

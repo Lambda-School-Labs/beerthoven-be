@@ -56,7 +56,7 @@ Allow the Beerthoven API to be seamless expanded to include integration of event
 
 ## Client repositories
 
-1. Web application at [React Front End Repository.](https://master.dsj5o2cfzjzih.amplifyapp.com)
+1. Web application at [React Front End Repository.](https://www.beerthoven.dev/)
 2. No IOS or Android versions.
 
 ## Build and Installation

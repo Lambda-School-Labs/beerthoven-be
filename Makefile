@@ -43,6 +43,15 @@ init: clean
 	 cd apollo && yarn install
 	 cd prisma && yarn install
 
+# Added for testing
+test: prisma-generate
+	@printf "$(OK_COLOR)"																																												&& \
+	 printf "\n%s\n" "======================================================================================"		&& \
+	 printf "%s\n"   "= Initializing Prismatopia"																																&& \
+	 printf "%s\n"   "======================================================================================"		&& \
+	 printf "$(NO_COLOR)"
+	 cd apollo && yarn test
+
 docker-clean: clean
 	@printf "$(OK_COLOR)"																																												&& \
 	 printf "\n%s\n" "======================================================================================"		&& \
