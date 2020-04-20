@@ -81,6 +81,7 @@ const Mutation = {
     const isValidEmail = emailExpression.test(
       String(args.data.email).toLowerCase(),
     );
+    
     if (!isValidEmail) throw new Error('email not in proper format');
 
     if (args.data.zip < 10000 || args.data.zip > 99999)
