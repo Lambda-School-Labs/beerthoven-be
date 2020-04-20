@@ -10,19 +10,10 @@
 const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Mutation = {
-  async login(_, args, { prisma }, info) {
-    const user = await prisma.user({
-      where: {
-        username: args.data.username,
-      },
-    });
-    console.log(user);
-  },
-
   //  User
   async createUser(_, args, { prisma }, info) {
     args.data.email = args.data.email.toLowerCase();
-
+    
     if (!args.data.email) throw new Error('Email name required!');
 
     const isValidEmail = emailExpression.test(

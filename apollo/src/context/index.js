@@ -59,9 +59,9 @@ const jwtVerifyOptions = {
 };
 
 // Verify the environment variable was set
-// if (!('JWKS_URI' in process.env)) {
-//   throw new Error("Required environment variable 'JWKS_URI' is not set");
-// }
+if (!('JWKS_URI' in process.env)) {
+  throw new Error("Required environment variable 'JWKS_URI' is not set");
+}
 
 // Creates a JWKS Client
 const { JWKS_URI } = process.env;
@@ -171,7 +171,7 @@ const context = async ({ req }) => {
   logger.debug('Current user: %O', user);
 
   // Pack the user, Prisma client and Winston logger into the context
-  return { user, prisma, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
+  return { user, prisma, logger }; // can also pass authorizationHeader
 };
 
 module.exports = context;
