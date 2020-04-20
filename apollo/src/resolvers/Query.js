@@ -68,10 +68,6 @@ const Query = {
 
     if (!findTalent) throw new Error("No talent with that ID found");
 
-    const findTalent = await prisma.$exists.talent({ id: args.where.id });
-
-    if (!findTalent) throw new Error('No talent with that ID found');
-
     return prisma.talent({ id: args.where.id }, info);
   },
 
@@ -131,7 +127,6 @@ const Query = {
 
     return prisma.volunteer({ id: args.where.id }, info);
   },
-};
 
   async venues(_, args, { prisma }, info) {
     return prisma.venues(null, info);
