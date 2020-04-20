@@ -7,9 +7,6 @@
    * @param {*} _info
    */
 
-  const validateNewUsers = require('./validateUser');
-
-
 
 const Query = {
   async users(parent, args, { prisma, user, authorizationHeader, tokenHeader }, info) {
