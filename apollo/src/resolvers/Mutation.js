@@ -6,6 +6,7 @@
  * @param {{ prisma: import('../generated/prisma-client').Prisma }} context
  * @returns { import('../generated/prisma-client').UserPromise }
  */
+const validateNewUsers = require('./validateUser');
 
 const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -22,7 +23,7 @@ const Mutation = {
   //  User
   async createUser(_, args, { prisma }, info) {
     args.data.email = args.data.email.toLowerCase();
-
+    validateNewUsers()
     if (!args.data.email) throw new Error('Email name required!');
 
     const isValidEmail = emailExpression.test(
