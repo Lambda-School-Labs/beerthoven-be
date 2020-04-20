@@ -52,17 +52,4 @@
 # import Mutation.updateTalent from "generated/prisma.graphql"
 # import Mutation.deleteTalent from "generated/prisma.graphql"
 
-type Mutation {
-  login(data: LoginUserInput!): AuthPayload!
-}
 
-#  Added for authorization
-type AuthPayload {
-  token: String!
-  user: User!
-}
-
-input LoginUserInput {
-  username: String!
-  password: String!
-}

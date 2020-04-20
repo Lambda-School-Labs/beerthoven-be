@@ -132,6 +132,7 @@ const context = async ({ req }) => {
   let tokenHeader;
   try {
     tokenHeader = jwt.decode(token, { complete: true }).header;
+    // console.log(tokenHeader)
   } catch (err) {
     logger.error('Error while decoding token: %O', token, err);
     throw new AuthenticationError('Not authorized');
@@ -146,6 +147,7 @@ const context = async ({ req }) => {
   let decodedJWT;
   try {
     decodedJWT = jwt.verify(token, pubKey, jwtVerifyOptions);
+    // console.log(decodedJWT)
   } catch (err) {
     logger.error('Error while verifying token: %O\n%O', token, err);
     throw new AuthenticationError('Not authorized');
@@ -155,12 +157,11 @@ const context = async ({ req }) => {
   logger.debug('Creating User using decoded JWT: %O', decodedJWT);
   const user = new User(
     (id = decodedJWT.sub),
-    // (name = decodedJWT.name),
-    (email = decodedJWT.email),
-    (role = decodedJWT.role)
+    (email = decodedJWT.uid),
+    (role = decodedJWT.groups)
   );
-// console.log("id as email", user.id)
-// console.log("email", user.email)
+// console.log("ID field email", user.id)
+// console.log("user id", user.email)
 // console.log("role", user.role)
   // Don't let anyone past this point if they aren't authenticated
   if (typeof user === 'undefined' || user == null) {

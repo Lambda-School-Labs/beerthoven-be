@@ -7,11 +7,16 @@
  * @returns { import('../generated/prisma-client').UserPromise }
  */
 
+const getUserInfo = require('./Helper');
+
+
 const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Mutation = {
   //  User
-  async createUser(_, args, { prisma }, info) {
+  async createUser(_, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     args.data.email = args.data.email.toLowerCase();
     
     if (!args.data.email) throw new Error('Email name required!');
@@ -30,7 +35,9 @@ const Mutation = {
   },
 
 
-  async deleteUser(_, args, { prisma }, info) {
+  async deleteUser(_, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findUser = await prisma.$exists.user({ id: args.where.id });
 
     if (!findUser) throw new Error('No user with that id...');
@@ -38,7 +45,9 @@ const Mutation = {
     return prisma.deleteUser({ id: args.where.id });
   },
 
-  async updateUser(parent, args, { prisma }, info) {
+  async updateUser(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     args.data.email = args.data.email.toLowerCase();
     
     const findUser = await prisma.$exists.user({ id: args.where.id });
@@ -62,7 +71,9 @@ const Mutation = {
   },
 
   //  Person
-  async createPerson(parent, args, { prisma }, info) {
+  async createPerson(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const emailTaken = await prisma.$exists.person({ email: args.data.email });
 
     if (emailTaken) throw new Error('Email taken');
@@ -70,6 +81,7 @@ const Mutation = {
     const isValidEmail = emailExpression.test(
       String(args.data.email).toLowerCase(),
     );
+    
     if (!isValidEmail) throw new Error('email not in proper format');
 
     if (args.data.zip < 10000 || args.data.zip > 99999)
@@ -78,7 +90,9 @@ const Mutation = {
     return prisma.createPerson(args.data, info);
   },
 
-  async deletePerson(parent, args, { prisma }, info) {
+  async deletePerson(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findPerson = await prisma.$exists.person({ id: args.where.id });
 
     if (!findPerson) throw new Error('Person not found...');
@@ -86,7 +100,9 @@ const Mutation = {
     return prisma.deletePerson({ id: args.where.id });
   },
 
-  async updatePerson(parent, args, { prisma }, info) {
+  async updatePerson(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.where.id) throw new Error('ID is required!');
 
     const findPerson = await prisma.$exists.person({ id: args.where.id });
@@ -107,13 +123,17 @@ const Mutation = {
   },
 
   //  Venue
-  async createVenue(parent, args, { prisma }, info) {
+  async createVenue(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.data.name) throw new Error('Venue name required');
 
     return prisma.createVenue(args.data, info);
   },
 
-  async deleteVenue(parent, args, { prisma }, info) {
+  async deleteVenue(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
 
     if (!findVenue) throw new Error('Venue not found...');
@@ -121,7 +141,9 @@ const Mutation = {
     return prisma.deleteVenue({ id: args.where.id });
   },
 
-  async updateVenue(parent, args, { prisma }, info) {
+  async updateVenue(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.where.id) throw new Error('Venue ID required...');
 
     const findVenue = await prisma.$exists.venue({ id: args.where.id });
@@ -137,13 +159,17 @@ const Mutation = {
   },
 
   //Event
-  async createEvent(parent, args, { prisma }, info) {
+  async createEvent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.data.event_name) throw new Error('Event name required!');
 
     return prisma.createEvent(args.data, info);
   },
 
-  async deleteEvent(parent, args, { prisma }, info) {
+  async deleteEvent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findEvent = await prisma.$exists.event({ id: args.where.id });
 
     if (!findEvent) throw new Error('Event not found...');
@@ -151,7 +177,9 @@ const Mutation = {
     return prisma.deleteEvent({ id: args.where.id });
   },
 
-  async updateEvent(parent, args, { prisma }, info) {
+  async updateEvent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.where.id) throw new Error('Enter event ID...');
 
     const findEvent = await prisma.$exists.event({ id: args.where.id });
@@ -167,7 +195,9 @@ const Mutation = {
   },
 
   //  Vendor
-  async createVendor(parent, args, { prisma }, info) {
+  async createVendor(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const emailTaken = await prisma.$exists.vendor({ email: args.data.email });
 
     if (emailTaken) throw new Error('Email taken');
@@ -179,7 +209,9 @@ const Mutation = {
     return prisma.createVendor(args.data, info);
   },
 
-  async updateVendor(parent, args, { prisma }, info) {
+  async updateVendor(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.where.id) throw new Error('ID required...');
 
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
@@ -200,7 +232,9 @@ const Mutation = {
     });
   },
 
-  async deleteVendor(parent, args, { prisma }, info) {
+  async deleteVendor(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findVendor = await prisma.$exists.vendor({ id: args.where.id });
 
     if (!findVendor) throw new Error('Vendor with ID not found...');
@@ -209,7 +243,9 @@ const Mutation = {
   },
 
   //  Talent
-  async createTalent(parent, args, { prisma }, info) {
+  async createTalent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (
       !args.data.talent_name ||
       !args.data.performance_type ||
@@ -224,7 +260,9 @@ const Mutation = {
     return prisma.createTalent(args.data);
   },
 
-  async updateTalent(parent, args, { prisma }, info) {
+  async updateTalent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     if (!args.where.id) throw new Error('Talent ID is required!');
 
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
@@ -245,18 +283,15 @@ const Mutation = {
     });
   },
 
-  async deleteTalent(parent, args, { prisma }, info) {
+  async deleteTalent(parent, args, { prisma, user }, info) {
+    getUserInfo(user);
+
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
 
     if (!findTalent) throw new Error('Talent with ID not found...');
 
     return prisma.deleteTalent({ id: args.where.id });
   },
-
-  //  Should we create a ticket table considering tickets come from a 3rd party source (eventbrite)?
-  //  Should we create a donation table considering they come from a 3rd party source (square)?
-  //  How would we connect those sources to auto import to the correct person profile?
-  //  Not sure how to accomplish without manual entry.
 };
 
 module.exports = Mutation;
