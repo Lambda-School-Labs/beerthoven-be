@@ -7,13 +7,17 @@
    * @param {*} _info
    */
 
+  const validateNewUsers = require('./validateUser');
+
+
+
 const Query = {
   async users(parent, args, { prisma, user, authorizationHeader, tokenHeader }, info) {
-    console.log(user.id) // test@example.com from JWT
-    // console.log(authorizationHeader.replace(/^Bearer\s/, '')) // gets the full token
-    console.log(tokenHeader.kid) // token id 
-    if (args) {
-      return prisma.users();
+    try {
+      return prisma.users({ ...args });
+      
+    } catch (err) {
+      throw err;
     }
   },
 
@@ -22,11 +26,15 @@ const Query = {
 
     if (!findUser) throw new Error('User with that id does not exist...');
 
-    return prisma.user({ id: args.where.id }, info);
+    return prisma.user({ id: args.where.id });
   },
 
   async persons(parent, args, { prisma }, info) {
-    return prisma.persons(null, info);
+    try {
+      return prisma.persons({ ...args });
+    } catch (err) {
+      throw err;
+    }
   },
 
   async person(parent, args, { prisma }, info) {
@@ -38,7 +46,7 @@ const Query = {
   },
 
   async events(parent, args, { prisma }, info) {
-    return prisma.events(null, info);
+    return prisma.events({ ...args });
   },
 
   async event(parent, args, { prisma }, info) {
@@ -48,12 +56,13 @@ const Query = {
 
     if (!findEvent) throw new Error('Event not found');
 
-    return prisma.event({ id: args.where.id }, info);
+    return prisma.event({ id: args.where.id });
   },
 
   //  Talents
   async talents(parent, args, { prisma }, info) {
-    return prisma.talents(null, info);
+    
+    return prisma.talents({ ...args });
   },
 
   //  Talent
@@ -69,7 +78,7 @@ const Query = {
 
   // Vendor
   async vendors(parent, args, { prisma }, info) {
-    return prisma.vendors(null, info);
+    return prisma.vendors({ ...args });
   },
 
   async vendor(parent, args, { prisma }, info) {
@@ -84,7 +93,7 @@ const Query = {
 
   // Ticket
   async tickets(parent, args, { prisma }, info) {
-    return prisma.tickets(null, info);
+    return prisma.tickets({ ...args });
   },
 
   async ticket(parent, args, { prisma }, info) {
@@ -98,7 +107,7 @@ const Query = {
 
   // Donation
   async donations(parent, args, { prisma }, info) {
-    return prisma.donations(null, info);
+    return prisma.donations({ ...args });
   },
   async donation(parent, args, { prisma }, info) {
     if (!args.where.id) throw new Error('ID required to find that donation');
@@ -111,7 +120,7 @@ const Query = {
 
   // Volunteer
   async volunteers(parent, args, { prisma }, info) {
-    return prisma.volunteers(null, info);
+    return prisma.volunteers({ ...args });
   },
   
   async volunteer(_, args, { prisma }, info) {
@@ -125,7 +134,7 @@ const Query = {
   },
 
   async venues(_, args, { prisma }, info) {
-    return prisma.venues(null, info);
+    return prisma.venues({ ...args });
   },
 
   async venue(_, args, { prisma }, info) {

@@ -1,10 +1,10 @@
 
-const { prisma } = require("../generated/prisma-client")
+const prisma  = require("../generated/prisma-client")
 
-module.exports = async (_, args, prisma, info) => {
+module.exports = async (parent, args, prisma, info) => {
 
 
-  console.log(_, args, prisma, info)
+  console.log(parent, args, prisma, info)
   // const errors = [];
 
   // function validateNewUser(user) {
