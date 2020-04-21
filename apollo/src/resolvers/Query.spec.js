@@ -26,28 +26,28 @@ describe("users", () => {
   });
 });
 
-// describe("user", () => {
-//   it("should throw an exception when PrismaClient.$exists.user() returns nothing", async () => {
-//     // Mock the Prisma client function we expect to be called
-//     jest.spyOn(mockContext.prisma.$exists, 'user').mockImplementation(async () => { return false; })
+describe("user", () => {
+  it("should throw an exception when PrismaClient.$exists.user() returns nothing", async () => {
+    // Mock the Prisma client function we expect to be called
+    jest.spyOn(mockContext.prisma.$exists, 'user').mockImplementation(async () => { return false; })
 
-//     // Execute the unit we're testing
-//     await expect(user(undefined, undefined, mockContext, undefined)).rejects.toThrow('User with that id does not exist...');
+    // Execute the unit we're testing
+    await expect(user(undefined, undefined, mockContext, undefined)).rejects.toThrow('User with that id does not exist...');
 
-//     // We expect the resolver to make the appropriate call to the Prisma client
-//     expect(mockContext.prisma.$exists.user).toBeCalledTimes(1);
-//   });
+    // We expect the resolver to make the appropriate call to the Prisma client
+    expect(mockContext.prisma.$exists.user).toBeCalledTimes(1);
+  });
 
-//   it("should return the user from the Prisma client", async () => {
-//     // Mock the Prisma client function we expect to be called
-//     jest.spyOn(mockContext.prisma.$exists, 'user').mockImplementation(async () => { return true; })
-//     jest.spyOn(mockContext.prisma, 'user').mockImplementation(async () => { return {}; })
+  it("should return the user from the Prisma client", async () => {
+    // Mock the Prisma client function we expect to be called
+    jest.spyOn(mockContext.prisma.$exists, 'user').mockImplementation(async () => { return true; })
+    jest.spyOn(mockContext.prisma, 'user').mockImplementation(async () => { return {}; })
 
-//     // Execute the unit we're testing
-//     await user(undefined, undefined, mockContext, undefined)
+    // Execute the unit we're testing
+    await user(undefined, undefined, mockContext, undefined)
 
-//     // We expect the resolver to make the appropriate calls to the Prisma client
-//     expect(mockContext.prisma.$exists.user).toBeCalledTimes(1);
-//     expect(mockContext.prisma.user).toBeCalledTimes(1);
-//   });
-// });
+    // We expect the resolver to make the appropriate calls to the Prisma client
+    expect(mockContext.prisma.$exists.user).toBeCalledTimes(1);
+    expect(mockContext.prisma.user).toBeCalledTimes(1);
+  });
+});
