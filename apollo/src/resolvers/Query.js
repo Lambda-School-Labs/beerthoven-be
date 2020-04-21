@@ -1,6 +1,5 @@
 // @ts-check
 const Query = {
-
   /**
    * @param {*} _parent
    * @param { [any] } args
@@ -8,7 +7,7 @@ const Query = {
    * @param {*} _info
    */
   users(_parent, args, context, _info) {
-    if(args) {
+    if (args) {
       return context.prisma.users(...args);
     }
 
@@ -21,32 +20,31 @@ const Query = {
    * @param { import('../context').Context } context
    * @param {*} _info
    */
+
+  //  User
   async user(_parent, args, context, _info) {
     const findUser = await context.prisma.$exists.user(args);
 
-    if (!findUser) throw new Error("User with that id does not exist...");
+    if (!findUser) throw new Error('User with that id does not exist...');
 
     return context.prisma.user(args);
   },
 
-  async persons(parent, args, { prisma }, info) {
-    return prisma.persons(null, info);
+  //  Person
+  async person(_parent, args, context, _info) {
+    const findPerson = await context.prisma.$exists.person(args);
+
+    if (!findPerson) throw new Error('No person with that id...');
+
+    return context.prisma.person(args);
   },
 
-  async person(parent, args, { prisma }, info) {
-    const findPerson = await prisma.$exists.person({ id: args.where.id });
-
-    if (!findPerson) throw new Error("No person with that id...");
-
-    return prisma.person({ id: args.where.id });
+  async persons(_parent, args, { prisma }, info) {
+    return prisma.persons(args);
   },
-
-  async events(parent, args, { prisma }, info) {
-    return prisma.events(null, info);
-  },
-
+  
   async event(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("Please enter an id");
+    if (!args.where.id) throw new Error('Please enter an id');
 
     const findEvent = await prisma.$exists.event({ id: args.where.id });
 
@@ -55,18 +53,23 @@ const Query = {
     return prisma.event({ id: args.where.id }, info);
   },
 
-  //  Talents
+  async events(_parent, args, { prisma }, info) {
+    return prisma.events(null, info);
+  },
+
+  
+
+  //  Talent
   async talents(parent, args, { prisma }, info) {
     return prisma.talents(null, info);
   },
 
-  //  Talent
   async talent(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("Please enter an id");
+    if (!args.where.id) throw new Error('Please enter an id');
 
     const findTalent = await prisma.$exists.talent({ id: args.where.id });
 
-    if (!findTalent) throw new Error("No talent with that ID found");
+    if (!findTalent) throw new Error('No talent with that ID found');
 
     return prisma.talent({ id: args.where.id }, info);
   },
@@ -77,11 +80,11 @@ const Query = {
   },
 
   async vendor(parent, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("ID required for vendor");
+    if (!args.where.id) throw new Error('ID required for vendor');
 
     const findVendor = prisma.$exists.vendor({ id: args.where.id });
 
-    if (!findVendor) throw new Error("Vendor not found...");
+    if (!findVendor) throw new Error('Vendor not found...');
 
     return prisma.vendor({ id: args.where.id }, info);
   },
@@ -119,15 +122,16 @@ const Query = {
   },
 
   async volunteer(_, args, { prisma }, info) {
-    if (!args.where.id) throw new Error("Please enter an id");
+    if (!args.where.id) throw new Error('Please enter an id');
 
     const findVolunteer = await prisma.$exists.volunteer({ id: args.where.id });
 
-    if (!findVolunteer) throw new Error("Volunteer not found...");
+    if (!findVolunteer) throw new Error('Volunteer not found...');
 
     return prisma.volunteer({ id: args.where.id }, info);
   },
 
+  //  Venue
   async venues(_, args, { prisma }, info) {
     return prisma.venues(null, info);
   },

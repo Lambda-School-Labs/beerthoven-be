@@ -36,10 +36,25 @@ console.log("Logging level: %s", logger.level);
  */
 exports.User = function User(id, name, email, groups) {
   this.id = id;
-  // this.name = name;
+  this.name = name;
   this.email = email;
-  this.role = role;
+  this.groups = groups;
 }
+
+/**
+ * Person object in context
+ * 
+ * @class
+ * @param { String } id
+ * @param { String } name
+ * @param { String } email
+ */
+exports.Person = function Person(id, name, email) {
+  this.id = id;
+  this.name = name;
+  this.email = email;
+}
+
 
 /**
  * The context passed to the resolvers
@@ -49,8 +64,9 @@ exports.User = function User(id, name, email, groups) {
  * @param { import('../generated/prisma-client').Prisma } prisma
  * @param { import('winston').Logger } logger
  */
-exports.Context = function Context(user, prisma, logger) {
+exports.Context = function Context(user, person, prisma, logger) {
   this.user = user;
+  this.person = person;
   this.prisma = prisma;
   this.logger = logger;
 };
