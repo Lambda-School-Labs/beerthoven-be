@@ -10,7 +10,16 @@
   "scripts": {
     "server": "nodemon index.js",
     "test": "jest --watchAll --runInBand",
+    "coverage": "jest --coverage --detectOpenHandles --forceExit || true",
     "eslint": "eslint --fix ./src"
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/vendor/**",
+      "!**/__tests__/**"
+    ]
   },
   "dependencies": {
     "@okta/jwt-verifier": "^1.0.0",

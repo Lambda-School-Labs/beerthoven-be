@@ -64,10 +64,14 @@ exports.User = function User(id, name, email, groups) {
  * @param { import('../generated/prisma-client').Prisma } prisma
  * @param { import('winston').Logger } logger
  */
-exports.Context = function Context(user, prisma, logger) {
+exports.Context = function Context(user, prisma, logger, authorizationHeader, tokenHeader) {
+  console.log("helpline68")
   this.user = user;
   this.prisma = prisma;
+  // this.context = context;
   this.logger = logger;
+  this.authorizationHeader = authorizationHeader;
+  this.tokenHeader = tokenHeader;
 };
 
 /**
@@ -126,6 +130,7 @@ const getKey = async (header) => {
  * @return { Promise<import('./').Context> } context
  */
 exports.default = async ({ req, _res }) => {
+  console.log("HELPME129");
   // Grab the 'Authorization' token from the header
   const authorizationHeader = req.header("Authorization");
   if (
@@ -194,5 +199,5 @@ exports.default = async ({ req, _res }) => {
   logger.debug("Current user: %O", user);
 
   // Pack the user, Prisma client and Winston logger into the context
-  return { user, prisma, context, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
+  return { user, prisma, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
 };

@@ -38,7 +38,7 @@ const typeDefs = gql(importSchema("schema/schema.graphql"));
 (async () => {
   // Check the environment
   checkEnvironment();
-
+console.log(contextInitializer.Context, "helpline41")
   const server = new ApolloServer({
     resolvers,
     typeDefs,

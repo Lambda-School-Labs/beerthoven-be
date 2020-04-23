@@ -25,7 +25,7 @@ const Query = {
 
 
   users(_parent, args, context, _info) {
-    // console.log(context, "helpme")
+    console.log(context.Context, "helpme")
     if (args) {
       return context.prisma.users(...args);
     }
