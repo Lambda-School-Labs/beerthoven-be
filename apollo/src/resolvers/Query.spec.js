@@ -86,7 +86,7 @@ describe('persons', () => {
       undefined,
     );
     expect(mockContext.prisma.persons).toBeCalledTimes(1);
-    expect(mockContext.prisma.persons).toBeCalledWith();
+    expect(mockContext.prisma.persons).toBeCalledWith(undefined);
     expect(returnedPersons).toEqual(returnedPersons);
   });
 });
