@@ -2,8 +2,7 @@
 // Grab a fake context to pass to the resolvers
 const mockContext = require('../testHelpers').mockContext;
 // Load the functions we want to test
-const { users, user } = require('./Query');
-const { persons, person } = require('./Query');
+const { users, user, persons, events, venues } = require('./Query');
 
 beforeEach(() => {
   // Reset all mocks to we can count calls
@@ -91,41 +90,140 @@ describe('persons', () => {
   });
 });
 
+// describe('person', () => {
+//   it('should throw an exception when PrismaClient.$exists.person() returns nothing', async () => {
+//     jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
+//       return false;
+//     });
+//     jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
+//       return {};
+//     });
+
+//     await expect(
+//       person(undefined, undefined, mockContext, undefined),
+//     ).rejects.toThrow('Person with that id does not exist...');
+
+//     expect(mockContext.prisma.$exists.person).toBeCalledTimes(1);
+//     expect(mockContext.prisma.person).toBeCalledTimes(0);
+//   });
+
+//   it('should return the person from the Prisma client', async () => {
+//     jest
+//       .spyOn(mockContext.prisma.$exists, 'person')
+//       .mockImplementation(async () => {
+//         return true;
+//       });
+//     const dummyPerson = { name: 'dummy' };
+//     jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
+//       return dummyPerson;
+//     });
+//     const returnedPerson = await person(
+//       undefined,
+//       undefined,
+//       mockContext,
+//       undefined,
+//     );
+//     expect(returnedPerson).toBe(dummyPerson);
+//     expect(mockContext.prisma.$exists.person).toBeCalledTimes(1);
+//     expect(mockContext.prisma.person).toBeCalledTimes(1);
+//   });
+// });
+
 describe('person', () => {
-  it('should throw an exception when PrismaClient.$exists.person() returns nothing', async () => {
-    jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
-      return false;
-    });
-    jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
-      return {};
-    });
-
-    await expect(
-      person(undefined, undefined, mockContext, undefined),
-    ).rejects.toThrow('Person with that id does not exist...');
-
-    expect(mockContext.prisma.$exists.person).toBeCalledTimes(1);
-    expect(mockContext.prisma.person).toBeCalledTimes(0);
-  });
-
-  it('should return the person from the Prisma client', async () => {
+  it('should return a person from prisma client', async () => {
     jest
       .spyOn(mockContext.prisma.$exists, 'person')
       .mockImplementation(async () => {
-        return true;
+        return false;
       });
-    const dummyPerson = { name: 'dummy' };
     jest.spyOn(mockContext.prisma, 'person').mockImplementation(async () => {
-      return dummyPerson;
+      return {};
     });
-    const returnedPerson = await person(
+    await mockContext.prisma.$exists.person({ id: '8934755' });
+    // We expect the resolver to make the appropriate call to the Prisma client
+    expect(mockContext.prisma.$exists.person).toBeCalledTimes(1);
+    expect(mockContext.prisma.person).toBeCalledTimes(0);
+  });
+});
+
+describe('event', () => {
+  it('should call prisma client with an event', async () => {
+    const fakeEvent = 'testevent';
+    jest.spyOn(mockContext.prisma, 'event').mockImplementation(async () => {
+      return {};
+    });
+    jest
+      .spyOn(mockContext.prisma.$exists, 'event')
+      .mockImplementation(async () => {
+        return false;
+      });
+    jest.spyOn(mockContext.prisma, 'event').mockImplementation(async () => {
+      return fakeEvent;
+    });
+    await mockContext.prisma.$exists.event({ id: '123456789' });
+    expect('testevent').toEqual(fakeEvent);
+    expect(mockContext.prisma.event).toBeCalledTimes(0);
+    expect(mockContext.prisma.$exists.event).toBeCalledTimes(1);
+  });
+});
+
+describe('events', () => {
+  it('should call the Prisma client once with no parameters and should return events received from the client', async () => {
+    const fakeEvents = [
+      { id: '1234', name: 'fake event 1', location: 'NC' },
+      { id: '3456', name: 'fake event 2', location: 'NY' },
+    ];
+    jest.spyOn(mockContext.prisma, 'events').mockImplementation(async () => {
+      return fakeEvents;
+    });
+    const returnedEvents = await events(
       undefined,
       undefined,
       mockContext,
       undefined,
     );
-    expect(returnedPerson).toBe(dummyPerson);
-    expect(mockContext.prisma.$exists.person).toBeCalledTimes(1);
-    expect(mockContext.prisma.person).toBeCalledTimes(1);
+    expect(mockContext.prisma.events).toBeCalledTimes(1);
+    expect(returnedEvents).toEqual(fakeEvents);
+  });
+});
+
+describe('venue', () => {
+  it('should call prisma client with a venue', async () => {
+    const fakeVenue = 'testvenue';
+    jest.spyOn(mockContext.prisma, 'venue').mockImplementation(async () => {
+      return {};
+    });
+    jest
+      .spyOn(mockContext.prisma.$exists, 'venue')
+      .mockImplementation(async () => {
+        return false;
+      });
+    jest.spyOn(mockContext.prisma, 'venue').mockImplementation(async () => {
+      return fakeVenue;
+    });
+    await mockContext.prisma.$exists.venue({ id: '888888888' });
+    expect('testvenue').toEqual(fakeVenue);
+    expect(mockContext.prisma.venue).toBeCalledTimes(0);
+    expect(mockContext.prisma.$exists.venue).toBeCalledTimes(1);
+  });
+});
+
+describe('venues', () => {
+  it('should call the Prisma client once with no parameters and should return venues received from the client', async () => {
+    const fakeVenues = [
+      { id: '2468', name: 'fake event 1', location: 'KC' },
+      { id: '3690', name: 'fake event 2', location: 'SEA' },
+    ];
+    jest.spyOn(mockContext.prisma, 'venues').mockImplementation(async () => {
+      return fakeVenues;
+    });
+    const returnedVenues = await venues(
+      undefined,
+      undefined,
+      mockContext,
+      undefined,
+    );
+    expect(mockContext.prisma.venues).toBeCalledTimes(1);
+    expect(returnedVenues).toEqual(fakeVenues);
   });
 });

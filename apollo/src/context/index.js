@@ -49,11 +49,11 @@ exports.User = function User(id, name, email, groups) {
  * @param { String } name
  * @param { String } email
  */
-exports.Person = function Person(id, name, email) {
-  this.id = id;
-  this.name = name;
-  this.email = email;
-}
+// exports.Person = function Person(id, name, email) {
+//   this.id = id;
+//   this.name = name;
+//   this.email = email;
+// }
 
 
 /**
@@ -64,9 +64,8 @@ exports.Person = function Person(id, name, email) {
  * @param { import('../generated/prisma-client').Prisma } prisma
  * @param { import('winston').Logger } logger
  */
-exports.Context = function Context(user, person, prisma, logger) {
+exports.Context = function Context(user, prisma, logger) {
   this.user = user;
-  this.person = person;
   this.prisma = prisma;
   this.logger = logger;
 };
@@ -195,5 +194,5 @@ exports.default = async ({ req, _res }) => {
   logger.debug("Current user: %O", user);
 
   // Pack the user, Prisma client and Winston logger into the context
-  return { user, prisma, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
+  return { user, prisma, context, logger, authorizationHeader, tokenHeader }; // can also pass authorizationHeader
 };

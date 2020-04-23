@@ -7,7 +7,7 @@ const winston = require("winston");
 // We'll pass it a real Prisma client, which will be mocked up as needed during testing
 const { prisma } = require("../generated/prisma-client");
 
-const { User, Person, Context } = require("../context");
+const { User, Context } = require("../context");
 
 // Create the logger
 const logger = winston.createLogger({
@@ -24,7 +24,7 @@ const user = new User("test-id", "Test User", "test@example.com", [
   "test-group",
 ]);
 //  Create test person 
-const person = new Person("test-id", "test Name", "test@testing.com")
+// const person = new Person("test-id", "test Name", "test@testing.com")
 
 // Create the mock context
-exports.mockContext = new Context(user, person, prisma, logger);
+exports.mockContext = new Context(user, prisma, logger);

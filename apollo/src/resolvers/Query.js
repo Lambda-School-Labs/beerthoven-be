@@ -6,33 +6,36 @@ const Query = {
    * @param { import('../context').Context } context
    * @param {*} _info
    */
-  users(_parent, args, context, _info) {
-    if (args) {
-      return context.prisma.users(...args);
-    }
-
-    return context.prisma.users();
-  },
-
+  
   /**
    * @param {*} _parent
    * @param { import('../generated/prisma-client').UserWhereUniqueInput } args
    * @param { import('../context').Context } context
    * @param {*} _info
    */
-
+  
   //  User
   async user(_parent, args, context, _info) {
     const findUser = await context.prisma.$exists.user(args);
-
+    
     if (!findUser) throw new Error('User with that id does not exist...');
-
+    
     return context.prisma.user(args);
   },
 
+
+  users(_parent, args, context, _info) {
+    // console.log(context, "helpme")
+    if (args) {
+      return context.prisma.users(...args);
+    }
+    return context.prisma.users();
+  },
+  
+
   //  Person
   async person(_parent, args, context, _info) {
-    const findPerson = await context.prisma.$exists.person(args);
+    const findPerson = await context.prisma.$exists.person(...args);
 
     if (!findPerson) throw new Error('No person with that id...');
 
@@ -54,7 +57,7 @@ const Query = {
   },
 
   async events(_parent, args, { prisma }, info) {
-    return prisma.events(null, info);
+    return prisma.events(args);
   },
 
   
