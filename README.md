@@ -2,6 +2,10 @@
 
 [![Test Coverage](https://api.codeclimate.com/v1/badges/aa287e926495123f6e4d/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/beerthoven-be/test_coverage)
 
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/test_coverage)
+
 # Beerthoven Back End
 
 Our mission is to offer enriching musical experiences through down-to-earth means. You can find the deployed project at [Beerthoven](https://master.dsj5o2cfzjzih.amplifyapp.com).
@@ -61,11 +65,13 @@ Allow the Beerthoven API to be seamless expanded to include integration of event
 
 ## Build and Installation
 
-Our server relies on Okta and another Prisma/PostgreSQL deployment to function correctly. If you would like to get your own local Beerthoven server running, clone this repo and follow this guide here.
+Our server relies on Okta and another Prisma/PostgreSQL deployment to function correctly. If you would like to get your own local Beerthoven server running, clone this repo and follow this guide here. If you are on Windows system you might want to install
+Cygwin or Windows Subsystem for Linux (WSL) in order to run ```make``` & ```aws``` commands. You will also need to install Docker.
 
 Once Okta and Prisma is configured:
 
-* Follow [these directions](#Prismatopia:) for prismatopia commands
+* Follow [these directions](#Prismatopia:) for prismatopia commands. Heads up: Prismatopia is updating regularly so check with
+  this [repo](https://github.com/Lambda-School-Labs/prismatopia) for more info.
 
 * visit your endpoint URL to interact with your server through the GraphQL Playground
 
@@ -80,8 +86,8 @@ APOLLO_JWKS_URI - Okta domain for your Okta application.
 APOLLO_JWT_ISSUER=<Okta domain for your Okta application.>
 APOLLO_TOKEN_ENDPOINT=<An OAuth endpoint for Apollo to use for validating tokens: e.,g. "https://dev-173777.okta.com/oauth2/default">
 APOLLO_CLIENT_ID=<Client ID from Okta>
-APOLLO_CLIENT_SECRET=<a secret for the prisma service to use: e.g. myfirstpassword>
-APOLLO_TEST_USERNAME=<username>
+APOLLO_CLIENT_SECRET=<a secret for the prisma service to use: e.g. <myfirstpassword>
+APOLLO_TEST_USERNAME=<sunny@example.com>
 APOLLO_TEST_PASSWORD=<password>
 PRISMA_ENDPOINT=http://localhost:7000
 PRISMA_SECRET=<another secret>
@@ -110,14 +116,12 @@ The GraphQL API consists of a single endpoint. In addition to the built-in docum
 
 ## Testing
 Our test runner is Jest for unit and integration tests.
-
+```make test``` is the command
 For integration testing, we simulate queries and mutations on the server through the apollo-server-testing library's createTestClient() function.
-
-### Setting up a testing Prisma service and database
 
 
 #### Running the tests with Docker Desktop
-
+```make test```
 
 ## Contributing
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
