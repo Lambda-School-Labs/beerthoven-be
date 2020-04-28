@@ -1,7 +1,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/test_coverage)
 ![CI](https://github.com/Lambda-School-Labs/prismatopia/workflows/CI/badge.svg)
-[![Dependency Status][daviddm-image]][daviddm-url]
+
+
 
 # Beerthoven Back End
 
