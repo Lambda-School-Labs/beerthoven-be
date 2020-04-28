@@ -1,5 +1,4 @@
 // @ts-check
-// const { prisma } = require("../generated/prisma-client")
 
 /**
  * @param {{ data: import('../generated/prisma-client').UserCreateInput }} args
@@ -8,7 +7,6 @@
  */
 
 const getUserInfo = require('./Helper');
-
 
 const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
