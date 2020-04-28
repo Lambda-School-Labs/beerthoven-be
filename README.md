@@ -1,8 +1,3 @@
-[![Maintainability](https://api.codeclimate.com/v1/badges/aa287e926495123f6e4d/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/beerthoven-be/maintainability)
-
-[![Test Coverage](https://api.codeclimate.com/v1/badges/aa287e926495123f6e4d/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/beerthoven-be/test_coverage)
-
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/maintainability)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/015ff2fee461e3bc2b2b/test_coverage)](https://codeclimate.com/github/Lambda-School-Labs/prismatopia/test_coverage)
 
