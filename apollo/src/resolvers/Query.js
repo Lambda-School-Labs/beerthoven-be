@@ -9,7 +9,7 @@ const Query = {
    */
   users(_parent, args, context, _info) {
     if(args) {
-      return context.prisma.users(...args);
+      return context.prisma.users(args);
     }
 
     return context.prisma.users();
