@@ -11,7 +11,6 @@ const getUserInfo = require('./Helper');
 const emailExpression = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Mutation = {
-  //  User
   async createUser(_, args, { prisma, user }, info) {
     getUserInfo(user);
 
@@ -31,7 +30,6 @@ const Mutation = {
 
     return prisma.createUser(args.data, info);
   },
-
 
   async deleteUser(_, args, { prisma, user }, info) {
     getUserInfo(user);
@@ -68,7 +66,6 @@ const Mutation = {
     );
   },
 
-  //  Person
   async createPerson(parent, args, { prisma, user }, info) {
     getUserInfo(user);
 
@@ -120,7 +117,6 @@ const Mutation = {
     });
   },
 
-  //  Venue
   async createVenue(parent, args, { prisma, user }, info) {
     getUserInfo(user);
 
@@ -156,7 +152,6 @@ const Mutation = {
     });
   },
 
-  //Event
   async createEvent(parent, args, { prisma, user }, info) {
     getUserInfo(user);
 
@@ -192,7 +187,6 @@ const Mutation = {
     });
   },
 
-  //  Vendor
   async createVendor(parent, args, { prisma, user }, info) {
     getUserInfo(user);
 
@@ -240,7 +234,6 @@ const Mutation = {
     return prisma.deleteVendor({ id: args.where.id });
   },
 
-  //  Talent
   async createTalent(parent, args, { prisma, user }, info) {
     getUserInfo(user);
 
