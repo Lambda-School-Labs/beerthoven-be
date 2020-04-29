@@ -23,6 +23,8 @@ const logger = winston.createLogger({
 const user = new User("test-id", "Test User", "test@example.com", [
   "test-group",
 ]);
+//  Create test person 
+// const person = new Person("test-id", "test Name", "test@testing.com")
 
 // Create the mock context
 exports.mockContext = new Context(user, prisma, logger);
