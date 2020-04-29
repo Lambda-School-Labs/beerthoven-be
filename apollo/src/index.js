@@ -31,7 +31,7 @@ const checkEnvironment = () => {
 };
 
 const resolvers = require("./resolvers");
-const contextInitializer = require("./context");
+const contextInitializer = require("./context").contextInitializer;
 
 const typeDefs = gql(importSchema("schema/schema.graphql"));
 
