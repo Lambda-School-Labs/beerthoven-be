@@ -34,12 +34,13 @@ console.log("Logging level: %s", logger.level);
  * @param { String } email
  * @param { [String] } groups
  */
-exports.User = function User(id, name, email, groups) {
+ const User = function User(id, name, email, groups) {
   this.id = id;
   // this.name = name;
   this.email = email;
   this.role = role;
 }
+exports.User = User;
 
 /**
  * The context passed to the resolvers
@@ -110,7 +111,7 @@ const getKey = async (header) => {
  * @param  { {req: import('Express').Request, _res: import('Express').Response} } req
  * @return { Promise<import('./').Context> } context
  */
-exports.default = async ({ req, _res }) => {
+exports.contextInitializer = async ({ req, _res }) => {
   // Grab the 'Authorization' token from the header
   const authorizationHeader = req.header("Authorization");
   if (
